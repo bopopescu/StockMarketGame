@@ -4,6 +4,9 @@ import binascii
 import mysql.connector
 
 
+class DBWriter(object):
+
+    def __init__(self, host, user, password):
 def publishUpdate(mydb, message):
     temp = message.split(',')
     mycursor = mydb.cursor()
@@ -17,7 +20,7 @@ def main():
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="Trop$cana052127"
+        passwd="Test"
     )
 
     print(mydb)
