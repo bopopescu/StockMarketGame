@@ -27,7 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DbWriter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="317">
+              <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -93,7 +94,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DbWriter">
+  <component name="RunManager" selected="Python.GDAXFeedHandler">
     <configuration name="DbWriter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -142,8 +143,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.DbWriter" />
         <item itemvalue="Python.GDAXFeedHandler" />
+        <item itemvalue="Python.DbWriter" />
       </list>
     </recent_temporary>
   </component>
@@ -162,7 +163,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -170,7 +170,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329235" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3989071" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -215,7 +215,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DbWriter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="317">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
