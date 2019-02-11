@@ -45,7 +45,7 @@ class DBWriter(object):
         mycursor = self.Db.cursor()
         bid = float(temp[2])
         offer = float(temp[3])
-        sqlString ="update cryptotopofbook set sequenceno=%s,bestbid=%.2f,bestoffer=%.2f where symbol='%s'" % (temp[0],bid,offer, temp[1])
+        sqlString ="update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f where symbol='%s'" % (seq, bid, offer, symbol)
         mycursor.execute(sqlString)
         self.Db.commit()
 
