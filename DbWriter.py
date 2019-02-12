@@ -1,30 +1,13 @@
 from kafka import KafkaConsumer
-import mysql.connector
 import sys
+from StockMarketDB import StockMarketDB
 
 
 class DBWriter(object):
 
     def __init__(self, host, user, password):
-
-        self.Host = host
-        self.User = user
-        self.Password = password
-        self.Db = None
+        self.Db = StockMarketDB(user, password, host)
         self.StartSeq = {}
-
-    def connectToDb(self):
-        self.Db = mysql.connector.connect(
-            host = self.Host,
-            user = self.User,
-            passwd = self.Password
-        )
-        print(self.Db)
-
-    def changeDb(self, dbname):
-        mycursor = self.Db.cursor()
-        mycursor.execute("use " + dbname)
-        self.Db.commit()
 
     def getKafkaConsumer(self):
 
@@ -36,35 +19,33 @@ class DBWriter(object):
         return consumer
 
     def publishUpdate(self, message):
+
         temp = message.split(',')
         seq = int(temp[0])
         symbol = temp[1]
-        if(seq <= self.StartSeq[symbol]):
+
+        if seq <= self.StartSeq[symbol]:
             return
 
-        mycursor = self.Db.cursor()
         bid = float(temp[2])
         offer = float(temp[3])
-        sqlString ="update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f where symbol='%s'" % (seq, bid, offer, symbol)
-        mycursor.execute(sqlString)
-        self.Db.commit()
 
+        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f where symbol='%s'" % (seq, bid, offer, symbol)
+        self.Db.update(sqlString)
         print(message)
 
     def getStartSequences(self):
 
         sqlString = "select symbol, sequenceno from cryptotopofbook"
-        mycursor = self.Db.cursor();
-        mycursor.execute(sqlString)
-        results = mycursor.fetchall()
+        results = self.Db.select(sqlString)
 
         for result in results:
             self.StartSeq[result[0]] = int(result[1])
 
-
     def run(self, database):
-        self.connectToDb()
-        self.changeDb(database)
+
+        self.Db.connect()
+        self.Db.changeDb(database)
         consumer = self.getKafkaConsumer()
 
         consumer.subscribe(['GDAXFeed'])
