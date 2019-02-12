@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 class StockMarketDB(object):
 
     def __init__(self, user, password, host):

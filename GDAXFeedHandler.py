@@ -8,21 +8,24 @@ from kafka import KafkaProducer
 class GDAXFeedHandler(object):
 
     def __init__(self, connectionName, tickerFileName):
+
         self.ConnectionName = connectionName
         self.TickerFileName = tickerFileName
         self.Tickers = []
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
     def getTickers(self):
+
         fp = open(self.TickerFileName,"r");
         for ticker in fp:
             self.Tickers.append(ticker.strip('\n'))
         fp.close()
 
     def getSubscriptionString(self):
+
         connectionString = "{\"type\": \"subscribe\",\"product_ids\": "
         count = 0
-        tickerString = "[";
+        tickerString = "["
         for ticker in self.Tickers:
             if count > 0:
                 tickerString += ","
@@ -36,6 +39,7 @@ class GDAXFeedHandler(object):
         return connectionString
 
     def subscribe(self, ws):
+
         self.getTickers()
         subscriptionString = self.getSubscriptionString()
         print("Sending Subscription TO cointbase: " + subscriptionString)
@@ -43,6 +47,7 @@ class GDAXFeedHandler(object):
         print("Sent subscription")
 
     def processEvent(self, data):
+
         f = "%Y-%m-%dT%H:%M:%S.%fZ"
         out = datetime.strptime(data['time'], f)
 
@@ -53,10 +58,11 @@ class GDAXFeedHandler(object):
         self.Producer.send('GDAXFeed', output.encode('utf-8'))
 
     def run(self):
+
         print("connecting to GDAX Exchange to get Market Data")
         ws = create_connection(self.ConnectionName)
         self.subscribe(ws)
-        print("Receiving...")
+        print("Receiving Data...")
 
         while 1:
             result = ws.recv()
@@ -67,6 +73,7 @@ class GDAXFeedHandler(object):
 
 
 def main():
+
     if len(sys.argv) < 3:
         print("usage: GDAXFeedHandler <connectionName> <tickerFile>")
         exit(1)
@@ -75,4 +82,5 @@ def main():
 
 
 if __name__ == '__main__':
+
     main()
