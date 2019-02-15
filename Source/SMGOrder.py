@@ -1,5 +1,5 @@
 import datetime
-from SMGOrderStates import SMOrderStates
+from Source.SMGOrderStates import SMOrderStates
 
 
 class SMGOrder(object):
@@ -20,16 +20,16 @@ class SMGOrder(object):
         self.Fills = {}
         self.Created = datetime.datetime.now()
         self.LastUpdate = datetime.datetime.now()
-        self.State = SMOrderStates.Open
+        self.State = SMOrderStates.Open.value
         self.ExtOrderId = extOrderId
         self.ExtSystem = extSystem
 
     def updateFillState(self):
 
         if self.Qty > self.Done:
-            self.updateState(SMOrderStates.Partial)
+            self.updateState(SMOrderStates.Partial.value)
         else:
-            self.updateState(SMOrderStates.Filled)
+            self.updateState(SMOrderStates.Filled.value)
 
     def addFill(self, fill):
 

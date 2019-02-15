@@ -1,7 +1,7 @@
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
-from SMGOrderManager import SMGOrderManager
-from SMGOrderTypes import SMOrderTypes
+from Source.SMGOrderManager import SMGOrderManager
+from Source.SMGOrderTypes import SMOrderTypes
 import threading
 
 
@@ -16,7 +16,7 @@ class SMGOrderSimulator(object):
 
     def sendOrder(self):
 
-        order = self.OM.createOrder("","","BTC-USD","Buy",100,SMOrderTypes.Market, 0, "Day","","")
+        order = self.OM.createOrder("","","BTC-USD","Buy",100,SMOrderTypes.Market.value, 0, "Day","","")
         print("Sending Order - " + str(order))
         self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
         self.Timer = threading.Timer(10, self.sendOrder)

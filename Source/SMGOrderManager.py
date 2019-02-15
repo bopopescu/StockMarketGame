@@ -1,6 +1,6 @@
-from SMGOrder import SMGOrder
-from SMGFill import SMGFill
-from SMGOrderStates import SMOrderStates
+from Source.SMGOrder import SMGOrder
+from Source.SMGFill import SMGFill
+from Source.SMGOrderStates import SMOrderStates
 
 
 class SMGOrderManager(object):
@@ -39,20 +39,19 @@ class SMGOrderManager(object):
     def createOrderFromMsg(self, orderMsg):
 
         temp = orderMsg.split(',')
-        if len(temp) == 1:
+        if len(temp) != 16:
             return
-        orderId = temp[0]
+
+        extOrderId = temp[0]
         symbol = temp[1]
         side = temp[2]
         qty = float(temp[3])
-        ordType = temp[4]
+        ordType = int(temp[4])
         limitPrice = float(temp[5])
         tif = temp[6]
-        extSystem = ""
-        if len(temp) == 16:
-            extSystem = temp[13]
+        extSystem = temp[13]
 
-        order = self.createOrder("","", symbol,side, qty, ordType, limitPrice, tif, orderId, extSystem)
+        order = self.createOrder("","", symbol,side, qty, ordType, limitPrice, tif, extOrderId, extSystem)
 
         return order
 

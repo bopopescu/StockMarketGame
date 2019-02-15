@@ -1,7 +1,10 @@
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
-from SMGOrderManager import SMGOrderManager
+from Source.SMGOrderManager import SMGOrderManager
+from Source.DBOrderManagerWriter import DBOrderManagerWriter
+
 import datetime
+
 
 class SMGExchange(object):
 
@@ -14,6 +17,8 @@ class SMGExchange(object):
         self.OM = SMGOrderManager("EXCH",1,1,"SMGExchange")
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
+        self.DB = DBOrderManagerWriter("localhost", "gdaxuser", "AnimalHouse1010", "StockMarketGame")
+
 
     def processBidOffer(self,message):
 
@@ -42,6 +47,7 @@ class SMGExchange(object):
     def processOrder(self,message):
 
         order = self.OM.createOrderFromMsg(message)
+        self.DB.saveNewOrder(order)
         price = self.getPrice(order.Symbol, order.Side)
         fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now())
         topic = order.ExtSystem + "Fill"

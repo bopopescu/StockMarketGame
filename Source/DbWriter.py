@@ -1,6 +1,6 @@
 from kafka import KafkaConsumer
 import sys
-from StockMarketDB import StockMarketDB
+from Source.StockMarketDB import StockMarketDB
 
 
 class DBWriter(object):
@@ -29,8 +29,9 @@ class DBWriter(object):
 
         bid = float(temp[2])
         offer = float(temp[3])
+        timestamp = temp[4]
 
-        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f where symbol='%s'" % (seq, bid, offer, symbol)
+        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f, timestamp='%s' where symbol='%s'" % (seq, bid, offer, timestamp,symbol)
         self.Db.update(sqlString)
         print(message)
 
