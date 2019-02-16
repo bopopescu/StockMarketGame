@@ -40,7 +40,7 @@ class SMGOrderManager(object):
 
         temp = orderMsg.split(',')
         if len(temp) != 16:
-            return
+            return None
 
         extOrderId = temp[0]
         symbol = temp[1]
@@ -54,6 +54,22 @@ class SMGOrderManager(object):
         order = self.createOrder("","", symbol,side, qty, ordType, limitPrice, tif, extOrderId, extSystem)
 
         return order
+
+    def createFillFromMsg(self, fillMsg):
+
+        temp = fillMsg.split(',')
+        if len(temp) != 8:
+            return None
+
+        extFillId = temp[2]
+        qty = float(temp[3])
+        price = float(temp[4])
+        refId = temp[6]
+        refTime = temp[5]
+
+        fill = self.createFill("", refId, qty, price, extFillId, refTime)
+
+        return fill
 
     def createFill(self, fillId, orderId, qty, price, exchangeId, exchangeTime):
 
