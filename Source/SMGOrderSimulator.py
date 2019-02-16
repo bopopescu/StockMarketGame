@@ -18,9 +18,9 @@ class SMGOrderSimulator(object):
     def setSide(self):
 
         if self.Side == "Buy":
-            self.Side = "Sell";
+            self.Side = "Sell"
         else:
-            self.Side = "Buy";
+            self.Side = "Buy"
 
     def sendOrder(self):
 
@@ -28,7 +28,7 @@ class SMGOrderSimulator(object):
         order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
         print("Sending Order - " + str(order))
         self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
-           self.Timer = threading.Timer(10, self.sendOrder)
+        self.Timer = threading.Timer(10, self.sendOrder)
         self.Timer.start()
 
     def run(self):
