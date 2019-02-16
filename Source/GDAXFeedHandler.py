@@ -69,6 +69,8 @@ class GDAXFeedHandler(object):
             value = json.loads(result)
             if value['type'] == "ticker" and 'time' in value:
                 self.processEvent(value)
+            else:
+                print(result)
         ws.close()
 
 
