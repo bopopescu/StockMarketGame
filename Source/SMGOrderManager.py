@@ -60,8 +60,7 @@ class SMGOrderManager(object):
         if fillId == "":
             fillId = self.getNextFillId()
 
-        fill = SMGFill(fillId, qty, price, exchangeId, exchangeTime);
-
+        fill = SMGFill(self.System, orderId, fillId, qty, price, exchangeId, exchangeTime)
         if orderId not in self.Orders.keys():
             print("Can't find order for OrderId " + orderId)
             return None
@@ -76,11 +75,22 @@ class SMGOrderManager(object):
                 return None
 
             parentOrder = self.Orders[order.ParentOrderId]
+            parentFill = SMGFill(self.System, parentOrder.OrderId, fillId, qty, price, exchangeId, exchangeTime)
 
-            if not parentOrder.addFill(fill):
+            if not parentOrder.addFill(parentFill):
                 return None
 
         return fill
+
+    def getOrder(self, orderId):
+
+        if orderId not in self.Orders.keys():
+            print("Can't find order.  OrderId " + orderId)
+            return None
+
+        order = self.Orders[orderId]
+
+        return order
 
     def cancelOrder(self, orderId):
 

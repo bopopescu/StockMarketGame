@@ -27,9 +27,9 @@ class SMGOrder(object):
     def updateFillState(self):
 
         if self.Qty > self.Done:
-            self.updateState(SMOrderStates.Partial.value)
+            self.State = SMOrderStates.Partial.value
         else:
-            self.updateState(SMOrderStates.Filled.value)
+            self.State = SMOrderStates.Filled.value
 
     def addFill(self, fill):
 

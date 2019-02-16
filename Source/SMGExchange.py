@@ -50,6 +50,9 @@ class SMGExchange(object):
         self.DB.saveNewOrder(order)
         price = self.getPrice(order.Symbol, order.Side)
         fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now())
+        self.DB.saveNewFill(fill)
+        self.DB.updateOrder(order)
+
         topic = order.ExtSystem + "Fill"
         print("Sending fill - Topic " + topic + " - " + str(fill))
         self.Producer.send(topic, str(fill).encode('utf-8'))
