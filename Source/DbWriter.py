@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 import sys
 from Source.StockMarketDB import StockMarketDB
 from Source.SMGConfigMgr import SMGConfigMgr
-
+import os
 
 class DBWriter(object):
 
@@ -67,8 +67,10 @@ def main():
         print("usage: <configfile>")
         exit(1)
 
+    configPath = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'configuration'))
+    configFileName = configPath + "\\" + sys.argv[1]
     config = SMGConfigMgr()
-    config.load("C:\\Users\\estigum\\Documents\\GitHub\\StockMarketGame\\Configuration\\DbWriter.cfg")
+    config.load(configFileName)
     host = config.getConfigItem("DatabaseInfo", "host")
     user = config.getConfigItem("DatabaseInfo", "user")
     password = config.getConfigItem("DatabaseInfo", "passwd")
