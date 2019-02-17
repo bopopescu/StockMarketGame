@@ -1,5 +1,5 @@
 import configparser
-
+import os
 
 class SMGConfigMgr(object):
 
@@ -10,7 +10,10 @@ class SMGConfigMgr(object):
 
     def load(self,filename):
 
-        self.Config.read(filename)
+        configPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'configuration'))
+        configFilename = configPath + "\\" + filename
+
+        self.Config.read(configFilename)
         sections = self.Config.sections()
         for section in sections:
             optionData = {}

@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 import sys
 from Source.StockMarketDB import StockMarketDB
 from Source.SMGConfigMgr import SMGConfigMgr
-import os
+
 
 class DBWriter(object):
 
@@ -32,7 +32,9 @@ class DBWriter(object):
         offer = float(temp[3])
         timestamp = temp[4]
 
-        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f, timestamp='%s' where symbol='%s'" % (seq, bid, offer, timestamp,symbol)
+        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f," \
+                    "timestamp='%s' where symbol='%s'" % (seq, bid, offer, timestamp, symbol)
+
         self.Db.update(sqlString)
         print(message)
 
@@ -67,17 +69,16 @@ def main():
         print("usage: <configfile>")
         exit(1)
 
-    configPath = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'configuration'))
-    configFileName = configPath + "\\" + sys.argv[1]
     config = SMGConfigMgr()
-    config.load(configFileName)
+    config.load(sys.argv[1])
+
     host = config.getConfigItem("DatabaseInfo", "host")
     user = config.getConfigItem("DatabaseInfo", "user")
     password = config.getConfigItem("DatabaseInfo", "passwd")
     database = config.getConfigItem("DatabaseInfo", "db")
 
     if host is None or user is None or password is None or database is None:
-        print("Invalid configuration items.  Please check config file")
+        print("Invalid configuration items.  Please check config file.")
         exit(1)
 
     writer = DBWriter(host, user, password)
