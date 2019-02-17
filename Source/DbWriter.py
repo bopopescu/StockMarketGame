@@ -1,6 +1,7 @@
 from kafka import KafkaConsumer
 import sys
 from Source.StockMarketDB import StockMarketDB
+from Source.SMGConfigMgr import SMGConfigMgr
 
 
 class DBWriter(object):
@@ -62,12 +63,23 @@ class DBWriter(object):
 
 def main():
 
-    if len(sys.argv) < 5:
-        print("usage: DbWriter <host> <user> <password> <database>")
+    if len(sys.argv) < 2:
+        print("usage: <configfile>")
         exit(1)
 
-    writer = DBWriter(sys.argv[1], sys.argv[2], sys.argv[3])
-    writer.run(sys.argv[4])
+    config = SMGConfigMgr()
+    config.load("C:\\Users\\estigum\\Documents\\GitHub\\StockMarketGame\\Configuration\\DbWriter.cfg")
+    host = config.getConfigItem("DatabaseInfo", "host")
+    user = config.getConfigItem("DatabaseInfo", "user")
+    password = config.getConfigItem("DatabaseInfo", "passwd")
+    database = config.getConfigItem("DatabaseInfo", "db")
+
+    if host is None or user is None or password is None or database is None:
+        print("Invalid configuration items.  Please check config file")
+        exit(1)
+
+    writer = DBWriter(host, user, password)
+    writer.run(database)
 
 
 if __name__ == '__main__':
