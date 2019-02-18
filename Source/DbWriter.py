@@ -28,14 +28,15 @@ class DBWriter(object):
         seq = int(temp[0])
         symbol = temp[1]
 
-        if seq <= self.StartSeq[symbol]:
-            return
+        if symbol in self.StartSeq:
+            if seq <= self.StartSeq[symbol]:
+                return
 
         bid = float(temp[2])
         offer = float(temp[3])
         timestamp = temp[4]
 
-        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.2f,bestoffer=%.2f," \
+        sqlString = "update cryptotopofbook set sequenceno=%d,bestbid=%.8f,bestoffer=%.8f," \
                     "timestamp='%s' where symbol='%s'" % (seq, bid, offer, timestamp, symbol)
 
         self.Db.update(sqlString)
