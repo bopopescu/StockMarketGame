@@ -2,13 +2,16 @@ from kafka import KafkaConsumer
 import sys
 from Source.StockMarketDB import StockMarketDB
 from Source.SMGConfigMgr import SMGConfigMgr
+from Source.SMGLogger import SMGLogger
 
 
 class DBWriter(object):
 
-    def __init__(self, host, user, password):
+    def __init__(self, host, user, password, logFile, logLevel):
+
         self.Db = StockMarketDB(user, password, host)
         self.StartSeq = {}
+        self.Logger = SMGLogger(logFile, logLevel)
 
     def getKafkaConsumer(self):
 
@@ -36,13 +39,12 @@ class DBWriter(object):
                     "timestamp='%s' where symbol='%s'" % (seq, bid, offer, timestamp, symbol)
 
         self.Db.update(sqlString)
-        print(message)
+        self.Logger.info(sqlString)
 
     def getStartSequences(self):
 
         sqlString = "select symbol, sequenceno from cryptotopofbook"
         results = self.Db.select(sqlString)
-
         for result in results:
             self.StartSeq[result[0]] = int(result[1])
 
@@ -52,6 +54,7 @@ class DBWriter(object):
         self.Db.changeDb(database)
         consumer = self.getKafkaConsumer()
 
+        self.Logger.info("Subscribe to GDAXFeed")
         consumer.subscribe(['GDAXFeed'])
 
         self.getStartSequences()
@@ -64,7 +67,6 @@ class DBWriter(object):
 
 
 def main():
-
     if len(sys.argv) != 2:
         print("usage: DbWriter.py <configfile>")
         exit(1)
@@ -76,12 +78,14 @@ def main():
     user = config.getConfigItem("DatabaseInfo", "user")
     password = config.getConfigItem("DatabaseInfo", "passwd")
     database = config.getConfigItem("DatabaseInfo", "db")
+    logFile = config.getConfigItem("Logging", "filename")
+    logLevel = config.getConfigItem("Logging", "loglevel")
 
-    if host is None or user is None or password is None or database is None:
+    if host is None or user is None or password is None or database is None or logFile is None or logLevel is None:
         print("Invalid configuration items.  Please check config file.")
         exit(1)
 
-    writer = DBWriter(host, user, password)
+    writer = DBWriter(host, user, password, logFile, logLevel)
     writer.run(database)
 
 
