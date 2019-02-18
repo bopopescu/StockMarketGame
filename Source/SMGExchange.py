@@ -5,11 +5,12 @@ from Source.DBOrderManagerWriter import DBOrderManagerWriter
 from Source.SMGConfigMgr import SMGConfigMgr
 import sys
 import datetime
+from Source.SMGLogger import SMGLogger
 
 
 class SMGExchange(object):
 
-    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName):
+    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName, logName, logLevel):
 
         self.Orders = {}
         self.Fills = {}
@@ -19,6 +20,7 @@ class SMGExchange(object):
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
         self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
+        self.Logger = SMGLogger(logName, logLevel)
 
 
     def processBidOffer(self,message):
@@ -32,7 +34,7 @@ class SMGExchange(object):
         offer = float(temp[3])
         self.Bids[symbol] = bid
         self.Offers[symbol] = offer
-        print("Update Bid/Offer for " + symbol + " " + str(bid) + " X " + str(offer))
+        self.Logger.info("Update Bid/Offer for " + symbol + " " + str(bid) + " X " + str(offer))
 
     def getPrice(self, symbol, side):
 
@@ -55,11 +57,12 @@ class SMGExchange(object):
         self.DB.updateOrder(order)
 
         topic = order.ExtSystem + "Fill"
-        print("Sending fill - Topic " + topic + " - " + str(fill))
+        self.Logger.info("Sending fill - Topic " + topic + " - " + str(fill))
         self.Producer.send(topic, str(fill).encode('utf-8'))
 
     def run(self):
 
+        self.Logger.info("Subscribing to GDAXFeed and SMGExchangeOrder")
         self.Consumer.subscribe(['GDAXFeed', 'SMGExchangeOrder'])
 
         while 1:
@@ -68,7 +71,7 @@ class SMGExchange(object):
                 if message[0] == "GDAXFeed":
                     self.processBidOffer(msg)
                 elif message[0] == "SMGExchangeOrder":
-                    print("Got an order - " + msg)
+                    self.Logger.info("Got an order - " + msg)
                     self.processOrder(msg)
 
 
@@ -89,13 +92,15 @@ def main():
     orderSeq = int(config.getConfigItem("OrderManager", "orderseq"))
     fillSeq = int(config.getConfigItem("OrderManager", "fillseq"))
     systemName = config.getConfigItem("OrderManager", "systemname")
+    logFile = config.getConfigItem("Logging", "filename")
+    logLevel = config.getConfigItem("Logging", "loglevel")
 
     if host is None or user is None or password is None or database is None or suffix is None \
-        or orderSeq is None or fillSeq is None or systemName is None:
+        or orderSeq is None or fillSeq is None or systemName is None or logFile is None or logLevel is None:
         print("Invalid configuration data.  Please check your configuration")
         exit(1)
 
-    client = SMGExchange(host, user, password, database, suffix, orderSeq, fillSeq, systemName)
+    client = SMGExchange(host, user, password, database, suffix, orderSeq, fillSeq, systemName, logFile, logLevel)
     client.run()
 
 

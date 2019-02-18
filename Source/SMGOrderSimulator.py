@@ -6,11 +6,12 @@ import threading
 from Source.DBOrderManagerWriter import DBOrderManagerWriter
 import sys
 from Source.SMGConfigMgr import SMGConfigMgr
+from Source.SMGLogger import SMGLogger
 
 
 class SMGOrderSimulator(object):
 
-    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName, defaultSide):
+    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName, defaultSide, logName, logLevel):
 
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
@@ -18,6 +19,7 @@ class SMGOrderSimulator(object):
         self.OM = SMGOrderManager(omSuffix, orderSeq, fillSeq, systemName)
         self.Side = defaultSide
         self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
+        self.Logger = SMGLogger(logName, logLevel)
 
     def setSide(self):
 
@@ -31,7 +33,7 @@ class SMGOrderSimulator(object):
         self.setSide()
         order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
         self.DB.saveNewOrder(order)
-        print("Sending Order - " + str(order))
+        self.Logger.info("Sending Order - " + str(order))
         self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
         self.Timer = threading.Timer(10, self.sendOrder)
         self.Timer.start()
@@ -42,7 +44,7 @@ class SMGOrderSimulator(object):
         if fill is None:
             return
 
-        print("Got Execution -" + str(fill))
+        self.Logger.info("Got Execution -" + str(fill))
         self.DB.saveNewFill(fill)
 
         order = self.OM.getOrder(fill.OrderId)
@@ -52,6 +54,7 @@ class SMGOrderSimulator(object):
 
     def run(self):
 
+        self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
         self.Timer.start()
 
@@ -78,13 +81,16 @@ def main():
     fillSeq = int(config.getConfigItem("OrderManager", "fillseq"))
     systemName = config.getConfigItem("OrderManager", "systemname")
     defaultSide = config.getConfigItem("OrderManager", "defaultside")
+    logFile = config.getConfigItem("Logging", "filename")
+    logLevel = config.getConfigItem("Logging", "loglevel")
 
     if host is None or user is None or password is None or database is None or suffix is None \
-        or orderSeq is None or fillSeq is None or systemName is None or defaultSide is None:
+        or orderSeq is None or fillSeq is None or systemName is None or defaultSide is None \
+        or logFile is None or logLevel is None:
         print("Invalid configuration data.  Please check your configuration")
         exit(1)
 
-    simulator = SMGOrderSimulator(host, user, password, database, suffix, orderSeq, fillSeq, systemName, defaultSide)
+    simulator = SMGOrderSimulator(host, user, password, database, suffix, orderSeq, fillSeq, systemName, defaultSide, logFile, logLevel)
     simulator.run()
 
 
