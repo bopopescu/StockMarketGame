@@ -1,3 +1,5 @@
+use stockmarketgame;
+
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'BTC-USD',0,0,'2019-02-14 16:00:10.726000');
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'BCH-USD',0,0,'2019-02-14 16:00:10.726000');
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'LTC-USD',0,0,'2019-02-14 16:00:10.726000');
