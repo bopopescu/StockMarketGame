@@ -4,12 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py" description="self.Consumer = KafkaConsumer(bootstrap_servers='l..." line="16" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Configuration/SMGExchange.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGExchange.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/SMGOrderSimulator.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGOrderSimulator.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGExchange.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGExchange.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGOrderSimulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGOrderSimulator.py" afterDir="false" />
-    </list>
+    <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/Source/GDAXFeedHandler.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="188">
-              <caret line="120" lean-forward="true" selection-start-line="118" selection-end-line="120" />
+              <caret line="120" selection-start-line="118" selection-end-line="120" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -46,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/Source/SMGLogger.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
-              <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+              <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -58,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+              <caret line="97" selection-start-line="97" selection-end-line="97" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -70,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/Configuration/SMGExchange.cfg">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -86,11 +81,7 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/DBOrderManagerWriter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -560,7 +551,7 @@
     <entry file="file://$PROJECT_DIR$/Source/SMGLogger.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -575,11 +566,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/DBOrderManagerWriter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/DbWriter.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -601,7 +588,7 @@
     <entry file="file://$PROJECT_DIR$/Source/GDAXFeedHandler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
-          <caret line="120" lean-forward="true" selection-start-line="118" selection-end-line="120" />
+          <caret line="120" selection-start-line="118" selection-end-line="120" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -611,14 +598,14 @@
     <entry file="file://$PROJECT_DIR$/Configuration/SMGExchange.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
-          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
