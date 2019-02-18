@@ -2,22 +2,23 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 from Source.SMGOrderManager import SMGOrderManager
 from Source.DBOrderManagerWriter import DBOrderManagerWriter
-
+from Source.SMGConfigMgr import SMGConfigMgr
+import sys
 import datetime
 
 
 class SMGExchange(object):
 
-    def __init__(self):
+    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName):
 
         self.Orders = {}
         self.Fills = {}
         self.Bids = {}
         self.Offers = {}
-        self.OM = SMGOrderManager("EXCH",1,1,"SMGExchange")
+        self.OM = SMGOrderManager(omSuffix, orderSeq, fillSeq, systemName)
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
-        self.DB = DBOrderManagerWriter("localhost", "gdaxuser", "AnimalHouse1010", "StockMarketGame")
+        self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
 
 
     def processBidOffer(self,message):
@@ -72,7 +73,29 @@ class SMGExchange(object):
 
 
 def main():
-    client = SMGExchange()
+
+    if len(sys.argv) != 2:
+        print("usage: SMGExchange.py <configfile>")
+        exit(1)
+
+    config = SMGConfigMgr()
+    config.load(sys.argv[1])
+
+    host = config.getConfigItem("DatabaseInfo", "host")
+    user = config.getConfigItem("DatabaseInfo", "user")
+    password = config.getConfigItem("DatabaseInfo", "passwd")
+    database = config.getConfigItem("DatabaseInfo", "db")
+    suffix = config.getConfigItem("OrderManager", "omsuffix")
+    orderSeq = int(config.getConfigItem("OrderManager", "orderseq"))
+    fillSeq = int(config.getConfigItem("OrderManager", "fillseq"))
+    systemName = config.getConfigItem("OrderManager", "systemname")
+
+    if host is None or user is None or password is None or database is None or suffix is None \
+        or orderSeq is None or fillSeq is None or systemName is None:
+        print("Invalid configuration data.  Please check your configuration")
+        exit(1)
+
+    client = SMGExchange(host, user, password, database, suffix, orderSeq, fillSeq, systemName)
     client.run()
 
 
