@@ -4,18 +4,20 @@ from Source.SMGOrderManager import SMGOrderManager
 from Source.SMGOrderTypes import SMOrderTypes
 import threading
 from Source.DBOrderManagerWriter import DBOrderManagerWriter
+import sys
+from Source.SMGConfigMgr import SMGConfigMgr
 
 
 class SMGOrderSimulator(object):
 
-    def __init__(self):
+    def __init__(self, hostName, user, password, dbName, omSuffix, orderSeq, fillSeq, systemName, defaultSide):
 
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
         self.Timer = threading.Timer(10, self.sendOrder)
-        self.OM = SMGOrderManager("SIM", 24, 24, "Simulator")
-        self.Side = "Sell"
-        self.DB = DBOrderManagerWriter("localhost", "gdaxuser", "AnimalHouse1010", "StockMarketGame")
+        self.OM = SMGOrderManager(omSuffix, orderSeq, fillSeq, systemName)
+        self.Side = defaultSide
+        self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
 
     def setSide(self):
 
@@ -60,7 +62,29 @@ class SMGOrderSimulator(object):
 
 def main():
 
-    simulator = SMGOrderSimulator()
+    if len(sys.argv) != 2:
+        print("usage: SMGOrderSimulator.py <configfile>")
+        exit(1)
+
+    config = SMGConfigMgr()
+    config.load(sys.argv[1])
+
+    host = config.getConfigItem("DatabaseInfo", "host")
+    user = config.getConfigItem("DatabaseInfo", "user")
+    password = config.getConfigItem("DatabaseInfo", "passwd")
+    database = config.getConfigItem("DatabaseInfo", "db")
+    suffix = config.getConfigItem("OrderManager", "omsuffix")
+    orderSeq = int(config.getConfigItem("OrderManager", "orderseq"))
+    fillSeq = int(config.getConfigItem("OrderManager", "fillseq"))
+    systemName = config.getConfigItem("OrderManager", "systemname")
+    defaultSide = config.getConfigItem("OrderManager", "defaultside")
+
+    if host is None or user is None or password is None or database is None or suffix is None \
+        or orderSeq is None or fillSeq is None or systemName is None or defaultSide is None:
+        print("Invalid configuration data.  Please check your configuration")
+        exit(1)
+
+    simulator = SMGOrderSimulator(host, user, password, database, suffix, orderSeq, fillSeq, systemName, defaultSide)
     simulator.run()
 
 
