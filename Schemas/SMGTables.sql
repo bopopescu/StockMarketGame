@@ -1,11 +1,13 @@
+use stockmarketgame;
+
 TRUNCATE TABLE cryptotopofbook;
-DROP TABLE cryptotopofbook;
+DROP TABLE cryptotopofbook IF EXISTS;
 
 TRUNCATE TABLE smgfill;
-DROP TABLE smgfill;
+DROP TABLE smgfill IF EXISTS;
 
 TRUNCATE TABLE smgorder;
-DROP TABLE smgorder;
+DROP TABLE smgorder IF EXISTS;
 
 CREATE TABLE cryptotopofbook
 (
