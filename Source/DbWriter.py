@@ -65,8 +65,8 @@ class DBWriter(object):
 
 def main():
 
-    if len(sys.argv) < 2:
-        print("usage: <configfile>")
+    if len(sys.argv) != 2:
+        print("usage: DbWriter.py <configfile>")
         exit(1)
 
     config = SMGConfigMgr()

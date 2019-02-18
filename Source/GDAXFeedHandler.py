@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 import sys
 from kafka import KafkaProducer
+from Source.SMGConfigMgr import SMGConfigMgr
 
 
 class GDAXFeedHandler(object):
@@ -57,29 +58,69 @@ class GDAXFeedHandler(object):
         print("Data Received - %s - Publish to Kafka" % output)
         self.Producer.send('GDAXFeed', output.encode('utf-8'))
 
-    def run(self):
+    def isHeartbeeatOk(self, heartbeattime):
+
+        current = datetime.now()
+
+        if current.hour < heartbeattime.hour:
+            return True
+
+        curval = current.second + (current.minute * 60) + (current.hour * 60 * 60)
+        heartval = heartbeattime.second + (heartbeattime.minute * 60) + (heartbeattime.hour * 60 * 60) + 60
+
+        if curval > heartval:
+            return False
+
+        return True
+
+    def connectAndSubscribe(self):
 
         print("connecting to GDAX Exchange to get Market Data")
         ws = create_connection(self.ConnectionName)
+        print("Subscribing to data")
         self.subscribe(ws)
+        return ws
+
+    def run(self):
+
+        ws = self.connectAndSubscribe()
+
         print("Receiving Data...")
 
+        heartbeatTime = datetime.now()
         while 1:
             result = ws.recv()
             value = json.loads(result)
             if value['type'] == "ticker" and 'time' in value:
                 self.processEvent(value)
-            else:
-                print(result)
+            elif value['type'] == "heartbeat":
+                heartbeatTime = datetime.now()
+
+            if not self.isHeartbeeatOk(heartbeatTime):
+                print("Stale heartbeat. Need to reconnect and subscribe")
+                ws.close()
+                ws = self.connectAndSubscribe()
+
         ws.close()
 
 
 def main():
 
-    if len(sys.argv) < 3:
-        print("usage: GDAXFeedHandler <connectionName> <tickerFile>")
+    if len(sys.argv) != 2:
+        print("usage: GDAXFeedHandler.py <configfile>")
         exit(1)
-    test = GDAXFeedHandler(sys.argv[1], sys.argv[2])
+
+    config = SMGConfigMgr()
+    config.load(sys.argv[1])
+
+    connection = config.getConfigItem("FeedHandler", "connection")
+    tickerFile = config.getConfigItem("FeedHandler", "tickerfile")
+
+    if connection is None or tickerFile is None:
+        print("Invalid configuration.  Please check")
+        exit(1)
+
+    test = GDAXFeedHandler(connection, tickerFile)
     test.run()
 
 
