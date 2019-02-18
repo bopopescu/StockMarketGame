@@ -5,6 +5,8 @@ import sys
 from kafka import KafkaProducer
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
+import os
+
 
 class GDAXFeedHandler(object):
 
@@ -18,7 +20,10 @@ class GDAXFeedHandler(object):
 
     def getTickers(self):
 
-        fp = open(self.TickerFileName,"r");
+        tickerPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+        tickerFilename = tickerPath + "\\" + self.TickerFileName
+
+        fp = open(tickerFilename,"r")
         for ticker in fp:
             self.Tickers.append(ticker.strip('\n'))
         fp.close()
