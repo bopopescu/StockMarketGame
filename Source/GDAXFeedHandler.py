@@ -4,16 +4,17 @@ from datetime import datetime
 import sys
 from kafka import KafkaProducer
 from Source.SMGConfigMgr import SMGConfigMgr
-
+from Source.SMGLogger import SMGLogger
 
 class GDAXFeedHandler(object):
 
-    def __init__(self, connectionName, tickerFileName):
+    def __init__(self, connectionName, tickerFileName, logFile, logLevel):
 
         self.ConnectionName = connectionName
         self.TickerFileName = tickerFileName
         self.Tickers = []
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
+        self.Logger = SMGLogger(logFile, logLevel)
 
     def getTickers(self):
 
@@ -43,9 +44,9 @@ class GDAXFeedHandler(object):
 
         self.getTickers()
         subscriptionString = self.getSubscriptionString()
-        print("Sending Subscription TO cointbase: " + subscriptionString)
+        self.Logger.info("Sending Subscription TO cointbase: " + subscriptionString)
         ws.send(subscriptionString)
-        print("Sent subscription")
+        self.Logger.info("Sent subscription")
 
     def processEvent(self, data):
 
@@ -55,7 +56,7 @@ class GDAXFeedHandler(object):
         output = str(data['sequence']) + "," + data['product_id'] + "," + data['best_bid'] + "," + data[
             'best_ask'] + "," + str(out)
 
-        print("Data Received - %s - Publish to Kafka" % output)
+        self.Logger.info("Data Received - %s - Publish to Kafka" % output)
         self.Producer.send('GDAXFeed', output.encode('utf-8'))
 
     def isHeartbeeatOk(self, heartbeattime):
@@ -75,9 +76,9 @@ class GDAXFeedHandler(object):
 
     def connectAndSubscribe(self):
 
-        print("connecting to GDAX Exchange to get Market Data")
+        self.Logger.info("connecting to GDAX Exchange to get Market Data")
         ws = create_connection(self.ConnectionName)
-        print("Subscribing to data")
+        self.Logger.info("Subscribing to data")
         self.subscribe(ws)
         return ws
 
@@ -85,7 +86,7 @@ class GDAXFeedHandler(object):
 
         ws = self.connectAndSubscribe()
 
-        print("Receiving Data...")
+        self.Logger.info("Receiving Data...")
 
         heartbeatTime = datetime.now()
         while 1:
@@ -97,7 +98,7 @@ class GDAXFeedHandler(object):
                 heartbeatTime = datetime.now()
 
             if not self.isHeartbeeatOk(heartbeatTime):
-                print("Stale heartbeat. Need to reconnect and subscribe")
+                self.Logger.info("Stale heartbeat. Need to reconnect and subscribe")
                 ws.close()
                 ws = self.connectAndSubscribe()
 
@@ -115,12 +116,15 @@ def main():
 
     connection = config.getConfigItem("FeedHandler", "connection")
     tickerFile = config.getConfigItem("FeedHandler", "tickerfile")
+    logFile = config.getConfigItem("Logging", "filename")
+    logLevel = config.getConfigItem("Logging", "loglevel")
 
-    if connection is None or tickerFile is None:
+    if connection is None or tickerFile is None or logFile is None or logLevel is None:
         print("Invalid configuration.  Please check")
         exit(1)
 
-    test = GDAXFeedHandler(connection, tickerFile)
+    test = GDAXFeedHandler(connection, tickerFile, logFile, logLevel)
+    test.Logger.info("Getting Ready to run")
     test.run()
 
 
