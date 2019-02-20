@@ -20,64 +20,79 @@ class GDAXFeedHandler(object):
 
     def getTickers(self):
 
-        tickerPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
-        tickerFilename = tickerPath + "\\" + self.TickerFileName
+        try:
+            tickerPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+            tickerFilename = tickerPath + "\\" + self.TickerFileName
 
-        fp = open(tickerFilename,"r")
-        for ticker in fp:
-            self.Tickers.append(ticker.strip('\n'))
-        fp.close()
+            fp = open(tickerFilename,"r")
+            for ticker in fp:
+                self.Tickers.append(ticker.strip('\n'))
+            fp.close()
+        except Exception:
+            self.Logger.error("Error processing Ticker FIle - " + tickerFilename)
 
     def getSubscriptionString(self):
 
-        connectionString = "{\"type\": \"subscribe\",\"product_ids\": "
-        count = 0
-        tickerString = "["
-        for ticker in self.Tickers:
-            if count > 0:
-                tickerString += ","
-            tickerString += "\"" + ticker + "\""
-            count += 1
-        tickerString += "]"
-        connectionString += tickerString
-        connectionString +=",\"channels\": [\"heartbeat\",{\"name\": \"ticker\",\"product_ids\": "
-        connectionString += tickerString
-        connectionString += "}]}"
-        return connectionString
+        try:
+            connectionString = "{\"type\": \"subscribe\",\"product_ids\": "
+            count = 0
+            tickerString = "["
+            for ticker in self.Tickers:
+                if count > 0:
+                    tickerString += ","
+                tickerString += "\"" + ticker + "\""
+                count += 1
+            tickerString += "]"
+            connectionString += tickerString
+            connectionString +=",\"channels\": [\"heartbeat\",{\"name\": \"ticker\",\"product_ids\": "
+            connectionString += tickerString
+            connectionString += "}]}"
+            return connectionString
+        except Exception:
+            self.Logger.error("Error processing subscription string")
 
     def subscribe(self, ws):
 
-        self.getTickers()
-        subscriptionString = self.getSubscriptionString()
-        self.Logger.info("Sending Subscription TO cointbase: " + subscriptionString)
-        ws.send(subscriptionString)
-        self.Logger.info("Sent subscription")
+        try:
+            self.getTickers()
+            subscriptionString = self.getSubscriptionString()
+            self.Logger.info("Sending Subscription TO cointbase: " + subscriptionString)
+            ws.send(subscriptionString)
+            self.Logger.info("Sent subscription")
+        except Exception:
+            raise Exception("Error sending subscription")
 
     def processEvent(self, data):
 
-        f = "%Y-%m-%dT%H:%M:%S.%fZ"
-        out = datetime.strptime(data['time'], f)
+        try:
+            f = "%Y-%m-%dT%H:%M:%S.%fZ"
+            out = datetime.strptime(data['time'], f)
 
-        output = str(data['sequence']) + "," + data['product_id'] + "," + data['best_bid'] + "," + data[
-            'best_ask'] + "," + str(out)
+            output = str(data['sequence']) + "," + data['product_id'] + "," + data['best_bid'] + "," + data[
+                'best_ask'] + "," + str(out)
 
-        self.Logger.info("Data Received - %s - Publish to Kafka" % output)
-        self.Producer.send('GDAXFeed', output.encode('utf-8'))
+            self.Logger.info("Data Received - %s - Publish to Kafka" % output)
+            self.Producer.send('GDAXFeed', output.encode('utf-8'))
+        except Exception:
+            self.Logger.error("Error processing event - " + str(data))
 
-    def isHeartbeeatOk(self, heartbeattime):
+    def isHeartbeatOk(self, heartbeattime):
 
-        current = datetime.now()
+        try:
+            current = datetime.now()
 
-        if current.hour < heartbeattime.hour:
+            if current.hour < heartbeattime.hour:
+                return True
+
+            curval = current.second + (current.minute * 60) + (current.hour * 60 * 60)
+            heartval = heartbeattime.second + (heartbeattime.minute * 60) + (heartbeattime.hour * 60 * 60) + 60
+
+            if curval > heartval:
+                return False
+
             return True
-
-        curval = current.second + (current.minute * 60) + (current.hour * 60 * 60)
-        heartval = heartbeattime.second + (heartbeattime.minute * 60) + (heartbeattime.hour * 60 * 60) + 60
-
-        if curval > heartval:
-            return False
-
-        return True
+        except Exception:
+            self.Logger.error("Error checking heartbeat")
 
     def connectAndSubscribe(self):
 
@@ -102,7 +117,7 @@ class GDAXFeedHandler(object):
             elif value['type'] == "heartbeat":
                 heartbeatTime = datetime.now()
 
-            if not self.isHeartbeeatOk(heartbeatTime):
+            if not self.isHeartbeatOk(heartbeatTime):
                 self.Logger.info("Stale heartbeat. Need to reconnect and subscribe")
                 ws.close()
                 ws = self.connectAndSubscribe()
