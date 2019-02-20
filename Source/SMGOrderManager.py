@@ -13,6 +13,14 @@ class SMGOrderManager(object):
         self.OrderIdText = orderIdText
         self.System = system
 
+    def setFillSeq(self, seq):
+
+        self.FillCounter = seq
+
+    def setOrderSeq(self, seq):
+
+        self.OrderCounter = seq
+
     def getNextOrderId(self):
 
         self.OrderCounter += 1

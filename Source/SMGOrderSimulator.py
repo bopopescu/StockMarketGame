@@ -7,6 +7,7 @@ from Source.DBOrderManagerWriter import DBOrderManagerWriter
 import sys
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
+from Source.StockMarketDB import StockMarketDB
 
 
 class SMGOrderSimulator(object):
@@ -18,8 +19,61 @@ class SMGOrderSimulator(object):
         self.Timer = threading.Timer(10, self.sendOrder)
         self.OM = SMGOrderManager(omSuffix, orderSeq, fillSeq, systemName)
         self.Side = defaultSide
-        self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
+        self.DbOmWriter = DBOrderManagerWriter(hostName, user, password, dbName)
         self.Logger = SMGLogger(logName, logLevel)
+
+    def setFillSeq(self):
+
+        sqlString = "select max(created) from smgfill where refId like 'SIM%'"
+        results =self.DbOmWriter.Db.select(sqlString)
+        if len(results) == 0:
+            return
+        created = ""
+        for result in results:
+            created = result[0]
+        sqlString = "select refId from smgFill where created='%s'" % (created)
+        results = self.DbOmWriter.Db.select(sqlString)
+
+        if len(results) == 0:
+            self.Logger.info("Did not get back a refId for SIM.  Strange!!!")
+            return
+        fillId = ""
+        for result in results:
+            if "SIM" in result[0]:
+                fillId = result[0]
+
+        temp = fillId.split('-')
+        if len(temp) != 2:
+            self.Logger.info("Error trying to split fillId.  FillId is " + fillId)
+            return
+
+        self.OM.setFillSeq(int(temp[1]))
+
+    def setOrderSeq(self):
+
+        sqlString = "select max(lastupdate) from smgorder where ordersystem = 'Simulator'"
+        results = self.DbOmWriter.Db.select(sqlString)
+        if len(results) == 0:
+            return
+        lastupdate = ""
+        for result in results:
+            lastupdate = result[0]
+        sqlString = "select orderId from smgorder where ordersystem = 'Simulator' and lastupdate = '%s'" % (lastupdate)
+
+        results = self.DbOmWriter.Db.select(sqlString)
+        if len(results) == 0:
+            self.Logger.info("Did not get back a orderId for Simulator.  Strange!!!")
+            return
+        orderId = ""
+        for result in results:
+            orderId = result[0]
+
+        temp = orderId.split('-')
+        if len(temp) != 2:
+            self.Logger.info("Error trying to split OrderId.  orderId is " + orderId)
+            return
+
+        self.OM.setOrderSeq(int(temp[1]))
 
     def setSide(self):
 
@@ -32,31 +86,50 @@ class SMGOrderSimulator(object):
 
         self.setSide()
         order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
-        self.DB.saveNewOrder(order)
+        self.DbOmWriter.saveNewOrder(order)
         self.Logger.info("Sending Order - " + str(order))
         self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
         self.Timer = threading.Timer(10, self.sendOrder)
         self.Timer.start()
 
+    def isValidFill(self, message):
+
+        temp = message.split(',')
+        if len(temp) != 8:
+            return False
+
+        temp2 = temp[6].split('-')
+        if len(temp2) != 2:
+            return False
+
+        if int(temp2[1]) <= self.OM.FillCounter:
+            return False
+
+        return True
+
     def processFill(self, message):
 
+        if not self.isValidFill(message):
+            return
         fill = self.OM.createFillFromMsg(message)
         if fill is None:
             return
 
         self.Logger.info("Got Execution -" + str(fill))
-        self.DB.saveNewFill(fill)
+        self.DbOmWriter.saveNewFill(fill)
 
         order = self.OM.getOrder(fill.OrderId)
         if order is None:
             return
-        self.DB.updateOrder(order)
+        self.DbOmWriter.updateOrder(order)
 
     def run(self):
 
+        self.setFillSeq()
+        self.setOrderSeq()
         self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
-        self.Timer.start()
+        #self.Timer.start()
 
         while 1:
             for message in self.Consumer:
