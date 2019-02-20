@@ -129,7 +129,7 @@ class SMGOrderSimulator(object):
         self.setOrderSeq()
         self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
-        #self.Timer.start()
+        self.Timer.start()
 
         while 1:
             for message in self.Consumer:
