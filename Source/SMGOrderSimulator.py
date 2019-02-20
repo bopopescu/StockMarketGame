@@ -24,56 +24,62 @@ class SMGOrderSimulator(object):
 
     def setFillSeq(self):
 
-        sqlString = "select max(created) from smgfill where refId like 'SIM%'"
-        results =self.DbOmWriter.Db.select(sqlString)
-        if len(results) == 0:
-            return
-        created = ""
-        for result in results:
-            created = result[0]
-        sqlString = "select refId from smgFill where created='%s'" % (created)
-        results = self.DbOmWriter.Db.select(sqlString)
+        try:
+            sqlString = "select max(created) from smgfill where refId like 'SIM%'"
+            results =self.DbOmWriter.Db.select(sqlString)
+            if len(results) == 0:
+                return
+            created = ""
+            for result in results:
+                created = result[0]
+            sqlString = "select refId from smgFill where created='%s'" % (created)
+            results = self.DbOmWriter.Db.select(sqlString)
 
-        if len(results) == 0:
-            self.Logger.info("Did not get back a refId for SIM.  Strange!!!")
-            return
-        fillId = ""
-        for result in results:
-            if "SIM" in result[0]:
-                fillId = result[0]
+            if len(results) == 0:
+                self.Logger.info("Did not get back a refId for SIM.  Strange!!!")
+                return
+            fillId = ""
+            for result in results:
+                if "SIM" in result[0]:
+                    fillId = result[0]
 
-        temp = fillId.split('-')
-        if len(temp) != 2:
-            self.Logger.info("Error trying to split fillId.  FillId is " + fillId)
-            return
+            temp = fillId.split('-')
+            if len(temp) != 2:
+                self.Logger.info("Error trying to split fillId.  FillId is " + fillId)
+                return
 
-        self.OM.setFillSeq(int(temp[1]))
+            self.OM.setFillSeq(int(temp[1]))
+        except Exception:
+            self.Logger.error("Error getting fillId.  Will go with default value")
 
     def setOrderSeq(self):
 
-        sqlString = "select max(lastupdate) from smgorder where ordersystem = 'Simulator'"
-        results = self.DbOmWriter.Db.select(sqlString)
-        if len(results) == 0:
-            return
-        lastupdate = ""
-        for result in results:
-            lastupdate = result[0]
-        sqlString = "select orderId from smgorder where ordersystem = 'Simulator' and lastupdate = '%s'" % (lastupdate)
+        try:
+            sqlString = "select max(lastupdate) from smgorder where ordersystem = 'Simulator'"
+            results = self.DbOmWriter.Db.select(sqlString)
+            if len(results) == 0:
+                return
+            lastupdate = ""
+            for result in results:
+                lastupdate = result[0]
+            sqlString = "select orderId from smgorder where ordersystem = 'Simulator' and lastupdate = '%s'" % (lastupdate)
 
-        results = self.DbOmWriter.Db.select(sqlString)
-        if len(results) == 0:
-            self.Logger.info("Did not get back a orderId for Simulator.  Strange!!!")
-            return
-        orderId = ""
-        for result in results:
-            orderId = result[0]
+            results = self.DbOmWriter.Db.select(sqlString)
+            if len(results) == 0:
+                self.Logger.info("Did not get back a orderId for Simulator.  Strange!!!")
+                return
+            orderId = ""
+            for result in results:
+                orderId = result[0]
 
-        temp = orderId.split('-')
-        if len(temp) != 2:
-            self.Logger.info("Error trying to split OrderId.  orderId is " + orderId)
-            return
+            temp = orderId.split('-')
+            if len(temp) != 2:
+                self.Logger.info("Error trying to split OrderId.  orderId is " + orderId)
+                return
 
-        self.OM.setOrderSeq(int(temp[1]))
+            self.OM.setOrderSeq(int(temp[1]))
+        except Exception:
+            self.Logger.error("Error getting orderId.  Will go with default value")
 
     def setSide(self):
 
@@ -84,13 +90,16 @@ class SMGOrderSimulator(object):
 
     def sendOrder(self):
 
-        self.setSide()
-        order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
-        self.DbOmWriter.saveNewOrder(order)
-        self.Logger.info("Sending Order - " + str(order))
-        self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
-        self.Timer = threading.Timer(10, self.sendOrder)
-        self.Timer.start()
+        try:
+            self.setSide()
+            order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
+            self.DbOmWriter.saveNewOrder(order)
+            self.Logger.info("Sending Order - " + str(order))
+            self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
+            self.Timer = threading.Timer(10, self.sendOrder)
+            self.Timer.start()
+        except Exception:
+            self.Logger.error("Error sending Order")
 
     def isValidFill(self, message):
 
@@ -109,19 +118,22 @@ class SMGOrderSimulator(object):
 
     def processFill(self, message):
 
-        if not self.isValidFill(message):
-            return
-        fill = self.OM.createFillFromMsg(message)
-        if fill is None:
-            return
+        try:
+            if not self.isValidFill(message):
+                return
+            fill = self.OM.createFillFromMsg(message)
+            if fill is None:
+                return
 
-        self.Logger.info("Got Execution -" + str(fill))
-        self.DbOmWriter.saveNewFill(fill)
+            self.Logger.info("Got Execution -" + str(fill))
+            self.DbOmWriter.saveNewFill(fill)
 
-        order = self.OM.getOrder(fill.OrderId)
-        if order is None:
-            return
-        self.DbOmWriter.updateOrder(order)
+            order = self.OM.getOrder(fill.OrderId)
+            if order is None:
+                return
+            self.DbOmWriter.updateOrder(order)
+        except Exception:
+            self.Logger.error("Error processing Fill")
 
     def run(self):
 

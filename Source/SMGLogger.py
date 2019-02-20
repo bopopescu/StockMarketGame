@@ -26,3 +26,11 @@ class SMGLogger(object):
     def info(self, message):
 
         logging.info(message)
+
+    def error(self, message):
+
+        logging.error(message)
+
+    def warning(self, message):
+
+        logging.warning(message)
