@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,8 +43,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor>
-                <caret column="1142" selection-start-column="1142" selection-end-column="1142" />
+              <first_editor relative-caret-position="17">
+                <caret line="1" column="740" lean-forward="true" selection-start-line="1" selection-start-column="740" selection-end-line="1" selection-end-column="740" />
               </first_editor>
               <second_editor />
             </state>
@@ -577,8 +577,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor>
-            <caret column="1142" selection-start-column="1142" selection-end-column="1142" />
+          <first_editor relative-caret-position="17">
+            <caret line="1" column="740" lean-forward="true" selection-start-line="1" selection-start-column="740" selection-end-line="1" selection-end-column="740" />
           </first_editor>
           <second_editor />
         </state>
