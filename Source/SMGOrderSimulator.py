@@ -7,7 +7,7 @@ from Source.DBOrderManagerWriter import DBOrderManagerWriter
 import sys
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
-from Source.StockMarketDB import StockMarketDB
+import random
 
 
 class SMGOrderSimulator(object):
@@ -21,6 +21,8 @@ class SMGOrderSimulator(object):
         self.Side = defaultSide
         self.DbOmWriter = DBOrderManagerWriter(hostName, user, password, dbName)
         self.Logger = SMGLogger(logName, logLevel)
+        self.SimTickers = ['BTC-USD', 'ETH-USD', 'LTC-USD', 'BCH-USD', 'ZRX-USD']
+        self.SimTickerCount = 0
 
     def setFillSeq(self):
 
@@ -88,11 +90,29 @@ class SMGOrderSimulator(object):
         else:
             self.Side = "Buy"
 
+    def getSymbol(self):
+
+        symbol = self.SimTickers[self.SimTickerCount]
+        self.SimTickerCount += 1
+
+        if self.SimTickerCount == len(self.SimTickers):
+            self.SimTickerCount = 0
+
+        return symbol
+
+    def getQty(self):
+
+        qty = random.randrange(100,1000,10)
+
+        return qty
+
     def sendOrder(self):
 
         try:
             self.setSide()
-            order = self.OM.createOrder("","","BTC-USD",self.Side,100,SMOrderTypes.Market.value, 0, "Day","","")
+            symbol = self.getSymbol()
+            qty = self.getQty()
+            order = self.OM.createOrder("","",symbol,self.Side,qty,SMOrderTypes.Market.value, 0, "Day","","")
             self.DbOmWriter.saveNewOrder(order)
             self.Logger.info("Sending Order - " + str(order))
             self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
