@@ -21,6 +21,12 @@ DROP TABLE smgportfolio
 TRUNCATE TABLE smguser;
 DROP TABLE smguser;
 
+TRUNCATE TABLE smgloanhistory;
+DROP TABLE smgloanhistory;
+
+TRUNCATE TABLE smgloan;
+DROP TABLE smgloan;
+
 CREATE TABLE cryptotopofbook
 (
     sequenceno bigint,
@@ -102,4 +108,24 @@ CREATE TABLE smgposition
     lastupdate datetime,
     FOREIGN KEY (userid)
     REFERENCES smguser (userid)
+);
+
+CREATE TABLE smgloan
+(
+    userid int NOT NULL,
+    loanid int AUTO_INCREMENT PRIMARY KEY,
+    amount decimal(18,6),
+    created datetime,
+    lastupdate datetime,
+    FOREIGN KEY (userid)
+    REFERENCES smguser (userid)
+);
+
+CREATE TABLE smgloanhistory
+(
+    loanid int NOT NULL,
+    amount decimal(18,6),
+    created datetime,
+    FOREIGN KEY (loanid)
+    REFERENCES smgloan (loanid)
 );
