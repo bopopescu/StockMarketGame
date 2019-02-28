@@ -31,7 +31,7 @@ class SMGUserManager(object):
         user = SMGUser(userId, username, password, fullname, email)
         return user
 
-    def createUserObjectFromMessage(userMsg):
+    def createUserObjectFromMessage(self, userMsg):
 
         temp = userMsg.split(',')
         if len(temp) != 5:
@@ -61,22 +61,21 @@ class SMGUserManager(object):
     def updateUserHistory(self,user, status):
 
         lastupdate = datetime.datetime.now()
-        sqlString = "insert into smguserhistory (userid, lastupdate, status) values (%d,'%s','%s')" %(user.UserId, lastupdate, status)
+        sqlString = "insert into smguserhistory (userid, lastupdate, status) values (%d,'%s','%s')" % (user.UserId, lastupdate, status)
 
         self.Db.update(sqlString)
 
     def createPortfolio(self, user, amount):
 
         lastupdate = datetime.datetime.now()
-        sqlString = "insert into smgportfolio (user, amount, created, lastupdate) values(%d, %16.8f, '%s', '%s')" & (user.UserId, amount, lastupdate, lastupdate)
+        sqlString = "insert into smgportfolio (userid, amount, created, lastupdate) values(%d, %16.8f, '%s', '%s')" % (user.UserId, amount, lastupdate, lastupdate)
 
         self.Db.update(sqlString)
 
     def createInitialPosition(self, user, currency, amount):
 
         lastupdate = datetime.datetime.now()
-        sqlString = "insert into smgposotion (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s'" \
-                    % (user.UserId, currency, amount, lastupdate, lastupdate)
+        sqlString = "insert into smgposition (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s')" % (user.UserId, currency, amount, lastupdate, lastupdate)
 
         self.Db.update(sqlString)
 
@@ -99,26 +98,35 @@ class SMGUserManager(object):
         self.Logger.info("Subscribe to SMGNewUser")
         self.Consumer.subscribe(['SMGNewUser'])
 
-        self.getStartSequences()
+        self.loadExistingUsers()
+
+        recovering = True
 
         while 1:
             for message in self.Consumer:
                 msg = message[6].decode("utf-8")
                 user = self.createUserObjectFromMessage(msg)
                 if user.UserName in self.Users:
-                    self.Logger.error("User already exist.  Can't create user " + user.UserName)
-                    self.Producer.send("UserAddFailed", "User already exists - " + user.UserName)
+                    if recovering is True:
+                        continue
+                    errorMsg = "User already exist.  Can't create user " + user.UserName
+                    self.Logger.error(errorMsg)
+
+                    self.Producer.send("UserAddFailed", errorMsg.encode('utf-8'))
                 else:
                     self.saveUser(user)
                     actuser = self.getUser(user.UserName)
                     if actuser is None:
                         self.Logger.error("Error creating user")
-                        self.Producer.send("UserAddFailed", "User did not save " + user.UserName)
+                        retval = "User did not save " + user.UserName
+                        self.Producer.send("UserAddFailed", retval.encode('utf-8'))
                     else:
                         self.updateUserHistory(actuser, "NEW")
                         self.createPortfolio(actuser, 15000000.00)
                         self.createInitialPosition(actuser, "USD", 15000000.00)
-                        self.Producer.send("UserAddSucceeded", str(actuser))
+                        self.Producer.send("UserAddSucceeded", str(actuser).encode('utf-8'))
+            recovering = False
+
 
 def main():
     if len(sys.argv) != 2:
