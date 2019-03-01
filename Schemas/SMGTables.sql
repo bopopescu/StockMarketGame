@@ -10,22 +10,22 @@ TRUNCATE TABLE smgorder;
 DROP TABLE smgorder IF EXISTS;
 
 TRUNCATE TABLE smguserhistory;
-DROP TABLE smguserhistory;
+DROP TABLE smguserhistory IF EXISTS;
 
 TRUNCATE TABLE smgposition;
-DROP TABLE smgposition;
+DROP TABLE smgposition IF EXISTS;
 
 TRUNCATE TABLE smgportfolio;
-DROP TABLE smgportfolio
-
-TRUNCATE TABLE smguser;
-DROP TABLE smguser;
+DROP TABLE smgportfolio IF EXISTS;
 
 TRUNCATE TABLE smgloanhistory;
-DROP TABLE smgloanhistory;
+DROP TABLE smgloanhistory IF EXISTS;
 
 TRUNCATE TABLE smgloan;
-DROP TABLE smgloan;
+DROP TABLE smgloan IF EXISTS;
+
+TRUNCATE TABLE smguser;
+DROP TABLE smguser IF EXISTS;
 
 CREATE TABLE cryptotopofbook
 (
@@ -35,18 +35,6 @@ CREATE TABLE cryptotopofbook
     bestoffer decimal(18,8),
     timestamp datetime,
     PRIMARY KEY (symbol)
-);
-
-CREATE TABLE smgfill
-(
-	ordersystem varchar(50),
-	orderId varchar(40) not NULL,
-	fillId varchar(40) not NULL,
-    qty decimal(15,6),
-    price decimal(18,8),
-	created datetime,
-	refId varchar(40),
-    PRIMARY KEY (orderId,fillId)
 );
 
 CREATE TABLE smgorder
@@ -68,7 +56,26 @@ CREATE TABLE smgorder
     state int,
     extorderid varchar(40),
     extsystem varchar(50),
-    PRIMARY KEY (orderid)
+    userid int NOT NULL,
+    sectype varchar(30),
+    PRIMARY KEY (orderid),
+    FOREIGN KEY (userid)
+    REFERENCES smguser (userid)
+);
+
+CREATE TABLE smgfill
+(
+	ordersystem varchar(50),
+	orderId varchar(40) not NULL,
+	fillId varchar(40) not NULL,
+    qty decimal(15,6),
+    price decimal(18,8),
+	created datetime,
+	refId varchar(40),
+    userid int NOT NULL,
+    PRIMARY KEY (orderId,fillId),
+    FOREIGN KEY (userid)
+    REFERENCES smguser (userid)
 );
 
 CREATE TABLE smguser

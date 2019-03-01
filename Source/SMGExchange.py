@@ -22,6 +22,18 @@ class SMGExchange(object):
         self.DB = DBOrderManagerWriter(hostName, user, password, dbName)
         self.Logger = SMGLogger(logName, logLevel)
         self.RecOrderIds = {}
+        self.UserId = -1
+
+    def setUserId(self):
+
+        sqlText = "select userid from smguser where username ='SMGExchange'"
+
+        results = self.DB.Db.select(sqlText)
+        for result in results:
+            self.UserId = result[0]
+            return True
+
+        return False
 
     def setFillSeq(self):
 
@@ -135,7 +147,7 @@ class SMGExchange(object):
 
         try:
             temp = message.split(',')
-            if len(temp) != 16:
+            if len(temp) != 18:
                 return
 
             extOrderId = temp[0]
@@ -148,10 +160,11 @@ class SMGExchange(object):
                 if int(etemp[1]) <= self.RecOrderIds[etemp[0]]:
                     return
 
-            order = self.OM.createOrderFromMsg(message)
+            order = self.OM.createOrderFromMsg(message, self.UserId)
             self.DB.saveNewOrder(order)
             price = self.getPrice(order.Symbol, order.Side)
-            fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now())
+            fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now()
+                                      , self.UserId)
             self.DB.saveNewFill(fill)
             self.DB.updateOrder(order)
 
@@ -162,6 +175,10 @@ class SMGExchange(object):
             self.Logger.error("Error processing Order message " + message)
 
     def run(self):
+
+        if self.setUserId() is False:
+            self.Logger.error("Not able to get UserId for SMGExchange")
+            return
 
         self.setFillSeq()
         self.setOrderSeq()

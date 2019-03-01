@@ -23,6 +23,18 @@ class SMGOrderSimulator(object):
         self.Logger = SMGLogger(logName, logLevel)
         self.SimTickers = ['BTC-USD', 'ETH-USD', 'LTC-USD', 'BCH-USD', 'ZRX-USD']
         self.SimTickerCount = 0
+        self.UserId = -1
+
+    def setUserId(self):
+
+        sqlText = "select userid from smguser where username ='SMGOrderSimulator'"
+
+        results = self.DbOmWriter.Db.select(sqlText)
+        for result in results:
+            self.UserId = result[0]
+            return True
+
+        return False
 
     def setFillSeq(self):
 
@@ -112,11 +124,11 @@ class SMGOrderSimulator(object):
             self.setSide()
             symbol = self.getSymbol()
             qty = self.getQty()
-            order = self.OM.createOrder("","",symbol,self.Side,qty,SMOrderTypes.Market.value, 0, "Day","","")
+            order = self.OM.createOrder("","",symbol,self.Side,qty,SMOrderTypes.Market.value, 0, "Day","","",self.UserId,"CRYPTO")
             self.DbOmWriter.saveNewOrder(order)
             self.Logger.info("Sending Order - " + str(order))
             self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
-            self.Timer = threading.Timer(10, self.sendOrder)
+            self.Timer = threading.Timer(1, self.sendOrder)
             self.Timer.start()
         except Exception:
             self.Logger.error("Error sending Order")
@@ -124,7 +136,7 @@ class SMGOrderSimulator(object):
     def isValidFill(self, message):
 
         temp = message.split(',')
-        if len(temp) != 8:
+        if len(temp) != 9:
             return False
 
         temp2 = temp[6].split('-')
@@ -141,7 +153,7 @@ class SMGOrderSimulator(object):
         try:
             if not self.isValidFill(message):
                 return
-            fill = self.OM.createFillFromMsg(message)
+            fill = self.OM.createFillFromMsg(message, self.UserId)
             if fill is None:
                 return
 
@@ -156,6 +168,10 @@ class SMGOrderSimulator(object):
             self.Logger.error("Error processing Fill")
 
     def run(self):
+
+        if self.setUserId() is False:
+            self.Logger.error("Not able to find userId for SMGOrderSimulator")
+            return
 
         self.setFillSeq()
         self.setOrderSeq()
