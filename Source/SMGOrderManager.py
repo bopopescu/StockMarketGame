@@ -74,6 +74,7 @@ class SMGOrderManager(object):
         qty = float(temp[3])
         price = float(temp[4])
         refId = temp[6]
+
         refTime = temp[5]
 
         fill = self.createFill("", refId, qty, price, extFillId, refTime, userId)
