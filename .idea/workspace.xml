@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Source/SMGUserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGUserManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Schemas/SMGTables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Schemas/SMGTables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Schemas/smgdata.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Schemas/smgdata.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/DBOrderManagerWriter.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DBOrderManagerWriter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGExchange.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGExchange.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGFill.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGFill.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGOrder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGOrderManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGOrderManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGOrderSimulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGOrderSimulator.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,20 +26,41 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Schemas/SMGTables.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="109" column="2" lean-forward="true" selection-start-line="109" selection-start-column="2" selection-end-line="109" selection-end-column="2" />
+            <state relative-caret-position="238">
+              <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
+        <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="127" selection-start-line="127" selection-end-line="127" />
+            <state relative-caret-position="99">
+              <caret line="130" column="42" selection-start-line="130" selection-start-column="42" selection-end-line="130" selection-end-column="42" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/DBOrderManagerWriter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -49,37 +78,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/mysql/connector/connection.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="395" selection-start-line="395" selection-end-line="395" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/StockMarketDB.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/SMGUser.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="159" column="63" lean-forward="true" selection-start-line="159" selection-start-column="47" selection-end-line="159" selection-end-column="63" />
+            <state relative-caret-position="130">
+              <caret line="148" selection-start-line="148" selection-end-line="148" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -88,13 +90,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/DbWriter.py">
+        <entry file="file://$PROJECT_DIR$/Schemas/smgdata.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="405">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
@@ -102,8 +101,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="41" column="13" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+            <state relative-caret-position="273">
+              <caret line="69" column="25" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -114,11 +113,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-458">
-              <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+            <state relative-caret-position="409">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/SMGFill.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -162,27 +170,27 @@
         <option value="$PROJECT_DIR$/Schemas/cryptotopofbook" />
         <option value="$PROJECT_DIR$/Source/SMGOrderTypes.py" />
         <option value="$PROJECT_DIR$/Schemas/smgfill.sql" />
-        <option value="$PROJECT_DIR$/Source/DBOrderManagerWriter.py" />
-        <option value="$PROJECT_DIR$/Source/SMGOrder.py" />
-        <option value="$PROJECT_DIR$/Source/SMGFill.py" />
         <option value="$PROJECT_DIR$/Source/SMGConfigMgr.py" />
         <option value="$PROJECT_DIR$/Configuration/DbWriter.cfg" />
         <option value="$PROJECT_DIR$/Configuration/SMGExchange.cfg" />
         <option value="$PROJECT_DIR$/Configuration/SMGOrderSimulator.cfg" />
         <option value="$PROJECT_DIR$/Schemas/cryptotopofbook.sql" />
         <option value="$PROJECT_DIR$/Configuration/GDAXFeedHandler.cfg" />
-        <option value="$PROJECT_DIR$/Schemas/smgdata.sql" />
-        <option value="$PROJECT_DIR$/Source/SMGOrderManager.py" />
         <option value="$PROJECT_DIR$/Source/SMGLogger.py" />
-        <option value="$PROJECT_DIR$/Source/SMGExchange.py" />
         <option value="$PROJECT_DIR$/Source/GDAXFeedHandler.py" />
         <option value="$PROJECT_DIR$/Source/DbWriter.py" />
-        <option value="$PROJECT_DIR$/Source/SMGOrderSimulator.py" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/Schemas/SMGTables.sql" />
         <option value="$PROJECT_DIR$/Configuration/SMGUserManager.cfg" />
         <option value="$PROJECT_DIR$/Source/SMGUser.py" />
         <option value="$PROJECT_DIR$/Source/SMGUserManager.py" />
+        <option value="$PROJECT_DIR$/Source/SMGOrder.py" />
+        <option value="$PROJECT_DIR$/Source/SMGFill.py" />
+        <option value="$PROJECT_DIR$/Schemas/smgdata.sql" />
+        <option value="$PROJECT_DIR$/Schemas/SMGTables.sql" />
+        <option value="$PROJECT_DIR$/Source/DBOrderManagerWriter.py" />
+        <option value="$PROJECT_DIR$/Source/SMGExchange.py" />
+        <option value="$PROJECT_DIR$/Source/SMGOrderManager.py" />
+        <option value="$PROJECT_DIR$/Source/SMGOrderSimulator.py" />
       </list>
     </option>
   </component>
@@ -248,7 +256,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SMGUserManager">
+  <component name="RunManager" selected="Python.SMGOrderSimulator">
     <configuration name="DbWriter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -363,11 +371,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SMGUserManager" />
         <item itemvalue="Python.SMGOrderSimulator" />
         <item itemvalue="Python.SMGExchange" />
         <item itemvalue="Python.DbWriter" />
         <item itemvalue="Python.GDAXFeedHandler" />
+        <item itemvalue="Python.SMGUserManager" />
       </list>
     </recent_temporary>
   </component>
@@ -386,6 +394,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49772727" visible="true" weight="0.24981412" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -434,9 +443,14 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Source/SMGUserManager.py</url>
-          <line>126</line>
-          <option name="timeStamp" value="15" />
+          <url>file://$PROJECT_DIR$/Source/SMGExchange.py</url>
+          <line>204</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Source/SMGOrderSimulator.py</url>
+          <line>153</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -506,40 +520,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGFill.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Schemas/cryptotopofbook.sql" />
     <entry file="file://$PROJECT_DIR$/Schemas/smgfill.sql" />
     <entry file="file://$PROJECT_DIR$/Schemas/smgorder.sql" />
-    <entry file="file://$PROJECT_DIR$/Schemas/smgdata.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/DBOrderManagerWriter.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Configuration/SMGOrderSimulator.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="118" column="25" selection-start-line="118" selection-start-column="25" selection-end-line="118" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -611,26 +598,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="41" column="13" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-458">
-          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGUser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -652,13 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Schemas/SMGTables.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="109" column="2" lean-forward="true" selection-start-line="109" selection-start-column="2" selection-end-line="109" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGConfigMgr.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -669,20 +629,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
+    <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="159" column="63" lean-forward="true" selection-start-line="159" selection-start-column="47" selection-end-line="159" selection-end-column="63" />
+        <state relative-caret-position="227">
+          <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
+    <entry file="file://$PROJECT_DIR$/Source/SMGFill.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Schemas/smgdata.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Schemas/SMGTables.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/DBOrderManagerWriter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="69" column="25" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="130">
-          <caret line="127" selection-start-line="127" selection-end-line="127" />
+          <caret line="148" selection-start-line="148" selection-end-line="148" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="130" column="42" selection-start-line="130" selection-start-column="42" selection-end-line="130" selection-end-column="42" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

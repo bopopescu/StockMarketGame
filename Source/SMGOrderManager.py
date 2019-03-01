@@ -31,7 +31,7 @@ class SMGOrderManager(object):
         self.FillCounter += 1
         return self.OrderIdText + "-" + str(self.FillCounter)
 
-    def createOrder(self, parentId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem):
+    def createOrder(self, parentId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType):
 
         if orderId == "":
             orderId = self.getNextOrderId()
@@ -39,15 +39,15 @@ class SMGOrderManager(object):
         if parentId == "":
             parentId = orderId
 
-        order = SMGOrder(self.System, orderId, parentId,symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem)
+        order = SMGOrder(self.System, orderId, parentId,symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType)
         self.Orders[orderId] = order
 
         return order
 
-    def createOrderFromMsg(self, orderMsg):
+    def createOrderFromMsg(self, orderMsg, userId):
 
         temp = orderMsg.split(',')
-        if len(temp) != 16:
+        if len(temp) != 18:
             return None
 
         extOrderId = temp[0]
@@ -58,15 +58,16 @@ class SMGOrderManager(object):
         limitPrice = float(temp[5])
         tif = temp[6]
         extSystem = temp[13]
+        secType = temp[17]
 
-        order = self.createOrder("","", symbol,side, qty, ordType, limitPrice, tif, extOrderId, extSystem)
+        order = self.createOrder("","", symbol,side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType)
 
         return order
 
-    def createFillFromMsg(self, fillMsg):
+    def createFillFromMsg(self, fillMsg, userId):
 
         temp = fillMsg.split(',')
-        if len(temp) != 8:
+        if len(temp) != 9:
             return None
 
         extFillId = temp[2]
@@ -75,16 +76,16 @@ class SMGOrderManager(object):
         refId = temp[6]
         refTime = temp[5]
 
-        fill = self.createFill("", refId, qty, price, extFillId, refTime)
+        fill = self.createFill("", refId, qty, price, extFillId, refTime, userId)
 
         return fill
 
-    def createFill(self, fillId, orderId, qty, price, exchangeId, exchangeTime):
+    def createFill(self, fillId, orderId, qty, price, exchangeId, exchangeTime, userId):
 
         if fillId == "":
             fillId = self.getNextFillId()
 
-        fill = SMGFill(self.System, orderId, fillId, qty, price, exchangeId, exchangeTime)
+        fill = SMGFill(self.System, orderId, fillId, qty, price, exchangeId, exchangeTime, userId)
         if orderId not in self.Orders.keys():
             print("Can't find order for OrderId " + orderId)
             return None
@@ -99,7 +100,7 @@ class SMGOrderManager(object):
                 return None
 
             parentOrder = self.Orders[order.ParentOrderId]
-            parentFill = SMGFill(self.System, parentOrder.OrderId, fillId, qty, price, exchangeId, exchangeTime)
+            parentFill = SMGFill(self.System, parentOrder.OrderId, fillId, qty, price, exchangeId, exchangeTime, userId)
 
             if not parentOrder.addFill(parentFill):
                 return None

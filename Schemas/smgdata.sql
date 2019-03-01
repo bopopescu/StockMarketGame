@@ -21,3 +21,5 @@ insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) v
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'ZRX-BTC',0,0,'2019-02-14 16:00:10.726000');
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'MKR-USDC',0,0,'2019-02-14 16:00:10.726000');
 insert into cryptotopofbook (sequenceno, symbol, bestbid, bestoffer,timestamp) values(1,'ZIL-USDC',0,0,'2019-02-14 16:00:10.726000');
+insert into smguser (username, password, fullname) values('SMGOrderSimulator','Test0521','SMGOrderSimulator');
+insert into smguser (username, password, fullname) values('SMGExchange','Test0521','SMGExchange');

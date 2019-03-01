@@ -4,7 +4,7 @@ from Source.SMGOrderStates import SMOrderStates
 
 class SMGOrder(object):
 
-    def __init__(self, system, parentOrderId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem):
+    def __init__(self, system, parentOrderId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType):
         self.System = system
         self.ParentOrderId = parentOrderId
         self.OrderId = orderId
@@ -23,6 +23,8 @@ class SMGOrder(object):
         self.State = SMOrderStates.Open.value
         self.ExtOrderId = extOrderId
         self.ExtSystem = extSystem
+        self.UserId = userId
+        self.SecType = secType
 
     def updateFillState(self):
 
@@ -58,4 +60,5 @@ class SMGOrder(object):
         return self.OrderId + "," + self.Symbol + "," + self.Side + "," + str(self.Qty) + "," + str(self.OrdType) \
                  + "," + str(self.LimitPrice) + "," + str(self.TIF) + "," + str(self.Done) + "," + str(self.Price) \
                  + "," + str(self.Open) + "," + str(self.Created) + "," + str(self.LastUpdate) + "," + str(self.State) \
-                 + "," + self.System + "," + self.ExtOrderId + "," + self.ExtSystem
+                 + "," + self.System + "," + self.ExtOrderId + "," + self.ExtSystem + "," + str(self.UserId) \
+                 + "," + self.SecType

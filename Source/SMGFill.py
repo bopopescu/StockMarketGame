@@ -3,7 +3,7 @@ import datetime
 
 class SMGFill(object):
 
-    def __init__(self, system, orderId, fillId, qty, price, refId, refTime):
+    def __init__(self, system, orderId, fillId, qty, price, refId, refTime, userId):
 
         self.System = system
         self.OrderId = orderId
@@ -13,8 +13,9 @@ class SMGFill(object):
         self.RefId = refId
         self.RefTime = refTime
         self.Created = datetime.datetime.now()
+        self.UserId = userId
 
     def __str__(self):
         return self.System + "," + self.OrderId + "," + self.FillId + "," + str(self.Qty) + "," \
                + str(self.Price) + "," + str(self.Created) \
-               + "," + self.RefId + "," + str(self.RefTime)
+               + "," + self.RefId + "," + str(self.RefTime) + "," + str(self.UserId)
