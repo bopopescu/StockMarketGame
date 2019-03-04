@@ -1,6 +1,8 @@
 from Source.StockMarketDB import StockMarketDB
 import datetime
 from Source.SMGUser import SMGUser
+from Source.SMGPortfolio import SMGPortfolio
+from Source.SMGPosition import SMGPosition
 
 class UserManager(object):
 
@@ -9,6 +11,9 @@ class UserManager(object):
         self.Db = StockMarketDB(user, password, host)
         self.Loggger = logger
         self.Users = {}
+        self.UsersById = {}
+        self.Portfolios = {}
+        self.Positions = {}
         self.MaxUserId = 0
 
     def connect(self, database):
@@ -26,6 +31,27 @@ class UserManager(object):
 
         user = SMGUser(userId, username, password, fullname, email)
         return user
+
+    def createPortfolioFromDbRecord(self, record):
+
+        userId = record[0]
+        amount = record[1]
+        created = record[2]
+        lastUpdate = record[3]
+
+        portfolio = SMGPortfolio(userId, amount, created, lastUpdate)
+        return portfolio
+
+    def createPositionFromDbRecord(self, record):
+
+        userId = record[0]
+        symbol = record[1]
+        amount = record[2]
+        created = record[3]
+        lastUpdate = record[4]
+
+        position = SMGPosition(userId, symbol, amount, created, lastUpdate)
+        return position
 
     def createUserObjectFromMessage(self, userMsg):
 
@@ -51,7 +77,44 @@ class UserManager(object):
         for result in results:
             user = self.createUserObjectFromDbRecord(result)
             self.Users[user.UserName] = user
+            self.UsersById[user.UserId] = user
             return user
+
+        return None
+
+    def getPortfolio(self, userId):
+
+        if userId in self.Portfolios:
+            return self.Portfolios[userId]
+
+        sqlString = "select * from smgportfolio where userid =%d" % (userId)
+        results = self.Db.select(sqlString)
+        for result in results:
+            portfolio = self.createPortfolioFromDbRecord(result)
+            self.Portfolios[userId] = portfolio
+            return portfolio
+
+        return None
+
+    def getPosition(self, userId, symbol):
+
+        if userId in self.Positions:
+            symbolList = self.Positions[userId]
+            if symbol in symbolList:
+                return symbolList[symbol]
+
+        sqlString = "select * from smgposition where userid =%d and symbol='%s'" % (userId, symbol)
+        results = self.Db.select(sqlString)
+        for result in results:
+            position = self.createPositionFromDbRecord(result)
+            if userId in self.Positions:
+                symbolList = self.Positions[userId]
+                symbolList[symbol] = position
+            else:
+                symbolList = {}
+                symbolList[symbol] = position
+                self.Positions[userId] = symbolList
+            return position
 
         return None
 
@@ -82,7 +145,7 @@ class UserManager(object):
 
         self.Db.update(sqlString)
 
-    def loadExistingUsers(self):
+    def loadUsers(self):
 
         sqlString = "select * from smguser"
         results = self.Db.select(sqlString)
@@ -90,8 +153,29 @@ class UserManager(object):
         for result in results:
             user = self.createUserObjectFromDbRecord(result)
             self.Users[user.UserName] = user
+            self.UsersById[user.UserId] = user
             if user.UserId > self.MaxUserId:
                 self.MaxUserId = user.UserId
+
+    def loadPortfolios(self):
+
+        results = self.Db.select("select * from smgportfolio")
+        for result in results:
+            portfolio = self.createPortfolioFromDbRecord(result)
+            self.Portfolios[portfolio.UserId] = portfolio
+
+    def loadPositions(self):
+
+        results = self.Db.select("select * from smgposition")
+        for result in results:
+            position = self.createPositionFromDbRecord(result)
+            if position.UserId in self.Positions:
+                symList = self.Positions[position.UserId]
+                symList[position.Symbol] = position
+            else:
+                symList = {}
+                symList[position.Symbol] = position
+                self.Positions[position.UserId] = symList
 
     def doesUserExist(self,username):
 
