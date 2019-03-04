@@ -32,6 +32,8 @@ class SMGUserManager(object):
             for message in self.Consumer:
                 msg = message[6].decode("utf-8")
                 user = self.UserManager.createUserObjectFromMessage(msg)
+                if user is None:
+                    continue
                 if self.UserManager.doesUserExist(user.UserName):
                     if recovering is True:
                         continue
