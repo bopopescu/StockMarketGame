@@ -1,112 +1,40 @@
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 import sys
-from Source.StockMarketDB import StockMarketDB
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
-from Source.SMGUser import  SMGUser
-import datetime
+from Source.UserManager import UserManager
+
 
 class SMGUserManager(object):
 
     def __init__(self, host, user, password, logFile, logLevel):
 
-        self.Db = StockMarketDB(user, password, host)
-        self.StartSeq = {}
         self.Logger = SMGLogger(logFile, logLevel)
-        self.Users = {}
-        self.MaxUserId = 0
+        self.UserManager = UserManager(host, user, password, self.Logger)
+        self.Producer = None
+        self.Consumer = None
+
+    def connect(self):
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest', consumer_timeout_ms=1000)
 
-
-    def createUserObjectFromDbRecord(self, record):
-
-        userId = record[0]
-        username = record[1]
-        password = record[2]
-        fullname = record[3]
-        email = record[4]
-
-        user = SMGUser(userId, username, password, fullname, email)
-        return user
-
-    def createUserObjectFromMessage(self, userMsg):
-
-        temp = userMsg.split(',')
-        if len(temp) != 5:
-            return None
-        userId = int(temp[0])
-        userName = temp[1]
-        password = temp[2]
-        fullName = temp[3]
-        email = temp[4]
-
-        user = SMGUser(userId, userName, password, fullName, email)
-        return user
-
-    def getUser(self, username):
-
-        sqlString = "select * from smguser where username ='%s'" % (username)
-        results = self.Db.select(sqlString)
-        for result in results:
-            return self.createUserObjectFromDbRecord(result)
-
-    def saveUser(self, user):
-
-        sqlString ="insert into smguser (username,password,fullname,email) values('%s', '%s', '%s', '%s')" % (user.UserName, user.Password, user.FullName, user.Email)
-
-        self.Db.update(sqlString)
-
-    def updateUserHistory(self,user, status):
-
-        lastupdate = datetime.datetime.now()
-        sqlString = "insert into smguserhistory (userid, lastupdate, status) values (%d,'%s','%s')" % (user.UserId, lastupdate, status)
-
-        self.Db.update(sqlString)
-
-    def createPortfolio(self, user, amount):
-
-        lastupdate = datetime.datetime.now()
-        sqlString = "insert into smgportfolio (userid, amount, created, lastupdate) values(%d, %16.8f, '%s', '%s')" % (user.UserId, amount, lastupdate, lastupdate)
-
-        self.Db.update(sqlString)
-
-    def createInitialPosition(self, user, currency, amount):
-
-        lastupdate = datetime.datetime.now()
-        sqlString = "insert into smgposition (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s')" % (user.UserId, currency, amount, lastupdate, lastupdate)
-
-        self.Db.update(sqlString)
-
-    def loadExistingUsers(self):
-
-        sqlString = "select * from smguser"
-        results = self.Db.select(sqlString)
-
-        for result in results:
-            user = self.createUserObjectFromDbRecord(result)
-            self.Users[user.UserName] = user
-            if user.UserId > self.MaxUserId:
-                self.MaxUserId = user.UserId
-
     def run(self, database):
-        self.Db.connect()
-        self.Db.changeDb(database)
-        self.loadExistingUsers()
-
+        self.connect()
+        self.UserManager.connect(database)
         self.Logger.info("Subscribe to SMGNewUser")
         self.Consumer.subscribe(['SMGNewUser'])
-
-        self.loadExistingUsers()
+        self.UserManager.loadExistingUsers()
 
         recovering = True
 
         while 1:
             for message in self.Consumer:
                 msg = message[6].decode("utf-8")
-                user = self.createUserObjectFromMessage(msg)
-                if user.UserName in self.Users:
+                user = self.UserManager.createUserObjectFromMessage(msg)
+                if user is None:
+                    continue
+                if self.UserManager.doesUserExist(user.UserName):
                     if recovering is True:
                         continue
                     errorMsg = "User already exist.  Can't create user " + user.UserName
@@ -114,16 +42,16 @@ class SMGUserManager(object):
 
                     self.Producer.send("UserAddFailed", errorMsg.encode('utf-8'))
                 else:
-                    self.saveUser(user)
-                    actuser = self.getUser(user.UserName)
+                    self.UserManager.saveUser(user)
+                    actuser = self.UserManager.getUser(user.UserName)
                     if actuser is None:
                         self.Logger.error("Error creating user")
                         retval = "User did not save " + user.UserName
                         self.Producer.send("UserAddFailed", retval.encode('utf-8'))
                     else:
-                        self.updateUserHistory(actuser, "NEW")
-                        self.createPortfolio(actuser, 15000000.00)
-                        self.createInitialPosition(actuser, "USD", 15000000.00)
+                        self.UserManager.updateUserHistory(actuser, "NEW")
+                        self.UserManager.createPortfolio(actuser, 15000000.00)
+                        self.UserManager.createInitialPosition(actuser, "USD", 15000000.00)
                         self.Producer.send("UserAddSucceeded", str(actuser).encode('utf-8'))
             recovering = False
 
