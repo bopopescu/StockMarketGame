@@ -141,8 +141,11 @@ class UserManager(object):
         position = self.getPosition(userId, symbol)
         if position is None:
             self.Loggger.Error("Can't find position to update. Symbol " + symbol)
+            return None
 
         position.Amount = amount
+
+        return position
 
     def createPortfolio(self, user, amount):
 

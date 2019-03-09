@@ -24,7 +24,7 @@ class BankManager(object):
     def getPosition(self, userId, symbol):
 
         return self.UserMgr.getPosition(userId, symbol)
-    
+
     def getPortfolioValue(self,userId):
 
         portfolio =self.UserMgr.getPortfolio(userId)
@@ -56,17 +56,19 @@ class BankManager(object):
         currencies = symbol.split('-')
         if len(currencies) != 2:
             self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
-            return False
+            return None, None
+
+        buyPosition = sellPosition = None
 
         if side == "Buy":
-            buyPosition = self.getPositionValue(userId, currencies[0]) + amount
-            self.UserMgr.updatePosition(userId, currencies[0], buyPosition)
-            sellPosition = self.getPositionValue(userId,currencies[1]) - oppositeAmount
-            self.UserMgr.updatePosition(userId, currencies[1], sellPosition)
+            buyPositionValue = self.getPositionValue(userId, currencies[0]) + amount
+            buyPosition = self.UserMgr.updatePosition(userId, currencies[0], buyPositionValue)
+            sellPositionValue = self.getPositionValue(userId,currencies[1]) - oppositeAmount
+            sellPosition = self.UserMgr.updatePosition(userId, currencies[1], sellPositionValue)
         else:
-            buyPosition = self.getPositionValue(userId, currencies[1]) + amount
-            self.UserMgr.updatePosition(userId, currencies[1], buyPosition)
-            sellPosition = self.getPositionValue(userId,currencies[0]) - oppositeAmount
-            self.UserMgr.updatePosition(userId, currencies[0], sellPosition)
+            buyPositionValue = self.getPositionValue(userId, currencies[1]) + amount
+            buyPosition = self.UserMgr.updatePosition(userId, currencies[1], buyPositionValue)
+            sellPositionValue = self.getPositionValue(userId,currencies[0]) - oppositeAmount
+            sellPosition = self.UserMgr.updatePosition(userId, currencies[0], sellPositionValue)
 
-
+        return buyPosition, sellPosition
