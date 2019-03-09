@@ -11,3 +11,62 @@ class BankManager(object):
     def connect(self, database):
 
         self.UserMgr.connect(database)
+
+    def getPositionValue(self, userId, symbol):
+
+        position = self.UserMgr.getPosition(userId, symbol)
+
+        if position is None:
+            return 0
+
+        return position.Amount
+
+    def getPosition(self, userId, symbol):
+
+        return self.UserMgr.getPosition(userId, symbol)
+    
+    def getPortfolioValue(self,userId):
+
+        portfolio =self.UserMgr.getPortfolio(userId)
+
+        if portfolio is None:
+            return 0
+
+        return portfolio.Amount
+
+    def canTradeCrypto(self, userId, symbol, side, amount, sellValue):
+
+        currencies = symbol.split('-')
+        if len(currencies) != 2:
+            self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
+            return False
+        if side == "Buy":
+            position = self.getPositionValue(userId,currencies[1])
+            if position < sellValue:
+                return False
+        else:
+            position = self.getPositionValue(userId,currencies[0])
+            if position < amount:
+                return False
+
+        return True
+
+    def updateCryptoPosition(self, userId, symbol, amount, oppositeAmount, side):
+
+        currencies = symbol.split('-')
+        if len(currencies) != 2:
+            self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
+            return False
+
+        if side == "Buy":
+            buyPosition = self.getPositionValue(userId, currencies[0]) + amount
+            self.UserMgr.updatePosition(userId, currencies[0], buyPosition)
+            sellPosition = self.getPositionValue(userId,currencies[1]) - oppositeAmount
+            self.UserMgr.updatePosition(userId, currencies[1], sellPosition)
+        else:
+            buyPosition = self.getPositionValue(userId, currencies[1]) + amount
+            self.UserMgr.updatePosition(userId, currencies[1], buyPosition)
+            sellPosition = self.getPositionValue(userId,currencies[0]) - oppositeAmount
+            self.UserMgr.updatePosition(userId, currencies[0], sellPosition)
+
+

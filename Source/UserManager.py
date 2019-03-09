@@ -131,6 +131,19 @@ class UserManager(object):
 
         self.Db.update(sqlString)
 
+    def updatePosition(self, userId, symbol, amount):
+
+        lastupdate = datetime.datetime.now()
+        sqlString = "update smgposition set amount = %18.6f and lastupdate = '%s' where userid = %d and symbol = '%s'" \
+            % (amount, lastupdate, userId, symbol)
+
+        self.Db.update(sqlString)
+        position = self.getPosition(userId, symbol)
+        if position is None:
+            self.Loggger.Error("Can't find position to update. Symbol " + symbol)
+
+        position.Amount = amount
+
     def createPortfolio(self, user, amount):
 
         lastupdate = datetime.datetime.now()
