@@ -24,7 +24,7 @@ class SMGUserManager(object):
         self.UserManager.connect(database)
         self.Logger.info("Subscribe to SMGNewUser")
         self.Consumer.subscribe(['SMGNewUser'])
-        self.UserManager.loadUsers()
+        self.UserManager.loadInitialData()
 
         recovering = True
 

@@ -31,6 +31,21 @@ class SMGOrderManager(object):
         self.FillCounter += 1
         return self.OrderIdText + "-" + str(self.FillCounter)
 
+    def isValidFill(self, message):
+
+        temp = message.split(',')
+        if len(temp) != 9:
+            return False
+
+        temp2 = temp[6].split('-')
+        if len(temp2) != 2:
+            return False
+
+        if int(temp2[1]) <= self.FillCounter:
+            return False
+
+        return True
+
     def createOrder(self, parentId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType):
 
         if orderId == "":

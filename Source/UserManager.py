@@ -4,6 +4,7 @@ from Source.SMGUser import SMGUser
 from Source.SMGPortfolio import SMGPortfolio
 from Source.SMGPosition import SMGPosition
 
+
 class UserManager(object):
 
     def __init__(self, host, user, password, logger):
@@ -160,6 +161,12 @@ class UserManager(object):
         sqlString = "insert into smgposition (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s')" % (user.UserId, currency, amount, lastupdate, lastupdate)
 
         self.Db.update(sqlString)
+
+    def loadInitialData(self):
+
+        self.loadUsers()
+        self.loadPortfolios()
+        self.loadPositions()
 
     def loadUsers(self):
 

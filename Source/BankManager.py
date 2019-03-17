@@ -6,6 +6,9 @@ class BankManager(object):
     def __init__(self,host, user, password, logger):
 
         self.UserMgr = UserManager(host, user, password, logger)
+
+    def setLogger(self, logger):
+
         self.Logger = logger
 
     def connect(self, database):
