@@ -22,6 +22,9 @@ class SMGBankManager(object):
         self.PricingMgr = PricingManager()
         self.ExtOrderId = 0
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Going to exit")
+
     def __enter__(self):
 
         self.BankManager.connect(self.Database)
@@ -30,6 +33,7 @@ class SMGBankManager(object):
                                       consumer_timeout_ms=1000)
         self.BankManager.UserMgr.loadInitialData()
         self.Consumer.subscribe(['GDAXFeed', 'SMGNewOrder', 'SMGBankManagerFill'])
+        return self
 
     def processFill(self, message):
 
@@ -44,7 +48,7 @@ class SMGBankManager(object):
             self.Logger.info("Got Execution -" + str(fill))
             self.DbOmWriter.saveNewFill(fill)
 
-            order = self.OM.getOrder(fill.OrderId)
+            order = self.OrderMgr.getOrder(fill.OrderId)
             if order is None:
                 return
 
@@ -81,7 +85,7 @@ class SMGBankManager(object):
             if int(etemp[1]) <= self.ExtOrderId:
                 return "IGNORE"
 
-            order = self.OM.createOrderFromMsg(message, self.UserId)
+            order = self.OrderMgr.createOrderFromMsg(message, self.UserId)
 
             price = self.PricingMgr.getPrice(order.Symbol, order.Side)
 
@@ -95,8 +99,8 @@ class SMGBankManager(object):
             self.Logger.info("Sending Order - " + str(order))
             self.Producer.send('SMGExchangeOrder', str(order).encode('utf-8'))
             return order.ExtOrderId + ",SUCCESS,Sent Order"
-        except Exception:
-            self.Logger.error("Error processing Order message " + message)
+        except Exception as e:
+            self.Logger.error("Error processing Order message " + message + " Error:" + str(e))
             return "0,ERROR,Error processing Order message "
 
     def run(self):
@@ -129,19 +133,18 @@ def main():
     database = config.getConfigItem("DatabaseInfo", "db")
     suffix = config.getConfigItem("OrderManager", "omsuffix")
     systemName = config.getConfigItem("OrderManager", "systemname")
-    defaultSide = config.getConfigItem("OrderManager", "defaultside")
     logFile = config.getConfigItem("Logging", "filename")
     logLevel = config.getConfigItem("Logging", "loglevel")
 
     if host is None or user is None or password is None or database is None or suffix is None \
-        or systemName is None or defaultSide is None or logFile is None or logLevel is None:
+        or systemName is None or logFile is None or logLevel is None:
         print("Invalid configuration data.  Please check your configuration")
         exit(1)
 
     with SMGBankManager(host, user, password, database, logFile, logLevel, suffix, systemName) as bankMgr:
         with OrderSequenceQuery(host, user, password, database) as seq:
             bankMgr.OrderMgr.setOrderSeq(seq.getOrderSeq(systemName))
-            bankMgr.OrderMgr.setFIllSeq(seq.getFillSeq(systemName))
+            bankMgr.OrderMgr.setFillSeq(seq.getFillSeq(systemName))
             bankMgr.ExtOrderId = seq.getExtOrderSeq(systemName)
         bankMgr.run()
 

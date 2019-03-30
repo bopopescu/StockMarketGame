@@ -15,9 +15,9 @@ class PricingManager(object):
 
             symbol = temp[1]
             self.Bids[symbol] = float(temp[2])
-            self.Offers[symbol] = float[temp[3]]
-        except Exception:
-            logging.ERROR("Error processing Bid/Offer message " + message)
+            self.Offers[symbol] = float(temp[3])
+        except Exception as e:
+            logging.ERROR("Error processing Bid/Offer message " + message + " " + str(e))
 
     def getPrice(self, symbol, side):
 

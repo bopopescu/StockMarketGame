@@ -15,18 +15,26 @@ class OrderSequenceQuery(object):
         self.Db = StockMarketDB(self.User, self.Password, self.Host)
         self.Db.connect()
         self.Db.changeDb(self.Database)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Exiting")
 
     def getExtOrderSeq(self, system):
 
         try:
             sqlString = "select max(lastupdate) from smgorder where ordersystem = '%s'" % system
-            results = self.DB.select(sqlString)
+            results = self.Db.select(sqlString)
             if len(results) == 0:
                 return 0
 
             lastupdate = ""
             for result in results:
                 lastupdate = result[0]
+
+            if lastupdate is None:
+                return 0
+
             sqlString = "select extorderId from smgorder where ordersystem = '%s' and lastupdate = '%s'" \
                         % (system, lastupdate)
 
@@ -52,13 +60,17 @@ class OrderSequenceQuery(object):
     def getOrderSeq(self, system):
         try:
             sqlString = "select max(lastupdate) from smgorder where ordersystem = '%s'" % system
-            results = self.DB.select(sqlString)
+            results = self.Db.select(sqlString)
             if len(results) == 0:
                 return 0
 
             lastupdate = ""
             for result in results:
                 lastupdate = result[0]
+
+            if lastupdate is None:
+                return 0
+
             sqlString = "select orderId from smgorder where ordersystem = '%s' and lastupdate = '%s'" % (system,lastupdate)
 
             results = self.Db.select(sqlString)
@@ -91,6 +103,10 @@ class OrderSequenceQuery(object):
             created = ""
             for result in results:
                 created = result[0]
+
+            if created is None:
+                return 0
+
             sqlString = "select fillId from smgfill where ordersystem = '%s' and created ='%s'" % (system, created)
             results = self.Db.select(sqlString)
 

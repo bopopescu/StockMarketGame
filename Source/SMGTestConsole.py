@@ -95,7 +95,7 @@ def run(logger, dbMgr, orderMgr, userMgr):
                 if order is None:
                     print("Not able to create the Order")
                 print("Was able to create Order.  OrdeId is " + order.OrderId)
-                producer.send("NewOrder",str(order).encode('utf-8'))
+                producer.send("SMGNewOrder",str(order).encode('utf-8'))
                 logger.info("Send out order " + str(order))
         elif val == 4:
             print("Not Implimented yet")
