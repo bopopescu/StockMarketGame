@@ -6,7 +6,7 @@ from Source.SMGOrderManager import SMGOrderManager
 from Source.SMGLogger import SMGLogger
 from Source.UserManager import UserManager
 from Source.SMGOrderTypes import SMOrderTypes
-
+from Source.SMGUser import SMGUser
 import threading
 import sys
 import os
@@ -41,6 +41,20 @@ def getUser(userMgr):
     return user.UserId
 
 
+def createUser(userMgr):
+
+    clearScreen()
+    userName = input("Enter user name: ")
+    password = input("Enter password: ")
+    fullName = input("Enter full name: ")
+    email = input("Enter email address: ")
+    if userMgr.doesUserExist(userName) is True:
+        print("userName already exist")
+        return None
+    user = SMGUser(-1,userName, password, fullName, email)
+    return user
+
+
 def createOrder(orderMgr, userId):
 
     clearScreen()
@@ -69,7 +83,10 @@ def run(logger, dbMgr, orderMgr, userMgr):
                 print("Could not validate user.  Existing")
                 break
         elif val == 2:
-            print("Not Implimented yet")
+            user = createUser(userMgr)
+            if user is not None:
+                producer.send("SMGNewUser", str(user).encode('utf-8'))
+                logger.info("Creating and Sending New User for userName " + user.UserName)
         elif val == 3:
             if userId is None:
                 print("Can't enter order until you login")
@@ -78,7 +95,7 @@ def run(logger, dbMgr, orderMgr, userMgr):
                 if order is None:
                     print("Not able to create the Order")
                 print("Was able to create Order.  OrdeId is " + order.OrderId)
-                #producer.send("NewOrder",str(order).encode('utf-8'))
+                producer.send("NewOrder",str(order).encode('utf-8'))
                 logger.info("Send out order " + str(order))
         elif val == 4:
             print("Not Implimented yet")
@@ -119,6 +136,7 @@ def main():
     logger.info("Started up SMGTestConsole")
     userMgr = UserManager(host, user, password, logger)
     userMgr.connect(database)
+    userMgr.loadInitialData()
 
     run(logger, dbMgr, orderMgr, userMgr)
 

@@ -10,5 +10,5 @@ class SMGUser(object):
         self.Email = email
 
     def __str__(self):
-        return "%d,%s,%s,%s" % (self.UserId, self.UserName, self.FullName, self.Email)
+        return "%d,%s,%s,%s,%s" % (self.UserId, self.UserName, self.Password,self.FullName, self.Email)
 

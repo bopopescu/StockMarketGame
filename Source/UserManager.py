@@ -60,6 +60,11 @@ class UserManager(object):
         if len(temp) != 5:
             return None
         userId = int(temp[0])
+
+        if userId == -1:
+            self.MaxUserId +=1
+            userId = self.MaxUserId
+
         userName = temp[1]
         password = temp[2]
         fullName = temp[3]
@@ -83,10 +88,11 @@ class UserManager(object):
 
         return None
 
-    def getPortfolio(self, userId):
+    def getPortfolio(self, userId, latest=False):
 
-        if userId in self.Portfolios:
-            return self.Portfolios[userId]
+        if latest is False:
+            if userId in self.Portfolios:
+                return self.Portfolios[userId]
 
         sqlString = "select * from smgportfolio where userid =%d" % (userId)
         results = self.Db.select(sqlString)
