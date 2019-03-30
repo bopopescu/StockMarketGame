@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Source/OrderSequenceQuery.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OrderSequenceQuery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PricingManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PricingManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SMGBankManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGBankManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGTestConsole.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGTestConsole.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/tickers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/tickers.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,23 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="92">
+              <caret line="108" selection-start-line="108" selection-end-line="108" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -71,6 +56,18 @@
               <caret line="113" selection-start-line="113" selection-end-line="113" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,10 +116,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/SMGUser.py">
+        <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="26" lean-forward="true" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+            <state relative-caret-position="301">
+              <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -269,7 +269,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SMGBankManager">
+  <component name="RunManager" selected="Python.SMGTestConsole">
     <configuration name="GDAXFeedHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -384,8 +384,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SMGBankManager" />
         <item itemvalue="Python.SMGTestConsole" />
+        <item itemvalue="Python.SMGBankManager" />
         <item itemvalue="Python.GDAXFeedHandler" />
         <item itemvalue="Python.SMGUserManager" />
         <item itemvalue="Python.SMGOrderSimulator" />
@@ -406,7 +406,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1733" height="693" extended-state="6" />
+    <frame x="-6" y="-6" width="1733" height="693" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49772727" visible="true" weight="0.19799647" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -640,15 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2805">
@@ -678,16 +669,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGPosition.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -785,10 +766,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGOrderManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGOrder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="92">
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>

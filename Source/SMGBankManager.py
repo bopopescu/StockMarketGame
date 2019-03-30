@@ -85,8 +85,8 @@ class SMGBankManager(object):
             if int(etemp[1]) <= self.ExtOrderId:
                 return "IGNORE"
 
-            order = self.OrderMgr.createOrderFromMsg(message, self.UserId)
-
+            userId = int(temp[16])
+            order = self.OrderMgr.createOrderFromMsg(message, userId)
             price = self.PricingMgr.getPrice(order.Symbol, order.Side)
 
             if price == 0:
