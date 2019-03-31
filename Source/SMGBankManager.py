@@ -32,7 +32,7 @@ class SMGBankManager(object):
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest',
                                       consumer_timeout_ms=1000)
         self.BankManager.UserMgr.loadInitialData()
-        self.Consumer.subscribe(['GDAXFeed', 'SMGNewOrder', 'SMGBankManagerFill'])
+        self.Consumer.subscribe(['GDAXFeed', 'SMGNewOrder', 'BankManagerFill'])
         return self
 
     def processFill(self, message):
@@ -41,7 +41,10 @@ class SMGBankManager(object):
             if not self.OrderMgr.isValidFill(message):
                 return
 
-            fill = self.OrderMgr.createFillFromMsg(message, self.UserId)
+            temp = message.split(',')
+            userId = temp[8]
+
+            fill = self.OrderMgr.createFillFromMsg(message, userId)
             if fill is None:
                 return
 
@@ -56,8 +59,8 @@ class SMGBankManager(object):
             self.Producer.send("SMGNewFill", str(fill).encode('utf-8'))
 
             self.updatePositions(order, fill)
-        except Exception:
-            self.Logger.error("Error processing Fill")
+        except Exception as e:
+            self.Logger.error("Error processing Fill - " + str(e))
 
     def updatePositions(self, order, fill):
 
@@ -115,8 +118,8 @@ class SMGBankManager(object):
                     text = self.processOrder(msg)
                     if text != "IGNORE":
                         self.Producer.send('SMGNewOrderResponse', text.encode('utf-8'))
-                elif message[0] == "SMGBankManagerFill":
-                    self.processFill(message)
+                elif message[0] == "BankManagerFill":
+                    self.processFill(msg)
 
 
 def main():
