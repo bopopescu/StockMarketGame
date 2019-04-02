@@ -140,15 +140,16 @@ class UserManager(object):
 
     def updatePosition(self, userId, symbol, amount):
 
+        position = self.getPosition(userId, symbol)
+        if position is None:
+            return self.createInitialPosition(userId, symbol, amount)
+
         lastupdate = datetime.datetime.now()
-        sqlString = "update smgposition set amount = %18.6f and lastupdate = '%s' where userid = %d and symbol = '%s'" \
+
+        sqlString = "update smgposition set amount = %f, lastupdate = '%s' where userid = %d and symbol = '%s'" \
             % (amount, lastupdate, userId, symbol)
 
         self.Db.update(sqlString)
-        position = self.getPosition(userId, symbol)
-        if position is None:
-            self.Loggger.Error("Can't find position to update. Symbol " + symbol)
-            return None
 
         position.Amount = amount
 
@@ -161,10 +162,10 @@ class UserManager(object):
 
         self.Db.update(sqlString)
 
-    def createInitialPosition(self, user, currency, amount):
+    def createInitialPosition(self, userId, currency, amount):
 
         lastupdate = datetime.datetime.now()
-        sqlString = "insert into smgposition (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s')" % (user.UserId, currency, amount, lastupdate, lastupdate)
+        sqlString = "insert into smgposition (userid, symbol, amount, created, lastupdate) values (%d, '%s', %16.8f, '%s', '%s')" % (userId, currency, amount, lastupdate, lastupdate)
 
         self.Db.update(sqlString)
 

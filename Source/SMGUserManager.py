@@ -51,7 +51,7 @@ class SMGUserManager(object):
                     else:
                         self.UserManager.updateUserHistory(actuser, "NEW")
                         self.UserManager.createPortfolio(actuser, 15000000.00)
-                        self.UserManager.createInitialPosition(actuser, "USD", 15000000.00)
+                        self.UserManager.createInitialPosition(actuser.UserId, "USD", 15000000.00)
                         self.Producer.send("NewUser", str(actuser).encode('utf-8'))
                         portfolio = self.UserManager.getPortfolio(actuser.UserId)
                         self.Producer.send("NewPortfolio", str(portfolio).encode('utf-8'))

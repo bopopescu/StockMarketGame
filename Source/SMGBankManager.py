@@ -85,6 +85,7 @@ class SMGBankManager(object):
                 self.Logger.info("Error processing order parsing extOrderId - " + extOrderId)
                 return extOrderId + ",ERROR,Error processing order parsing"
 
+
             if int(etemp[1]) <= self.ExtOrderId:
                 return "IGNORE"
 

@@ -42,7 +42,7 @@ class BankManager(object):
         value = amount * price
         currencies = symbol.split('-')
         if len(currencies) != 2:
-            self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
+            self.Logger.error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
             return False
 
         if side == "Buy":
@@ -60,7 +60,7 @@ class BankManager(object):
         if secType == "CRYPTO":
             return self.canTradeCrypto(userId, symbol, side, amount, price)
         else:
-            self.Logger("Security Type not supported - " + secType)
+            self.Logger.error("Security Type not supported - " + secType)
             return False
 
     def updateCryptoPosition(self, userId, symbol, amount, price, side):
@@ -68,20 +68,20 @@ class BankManager(object):
         value = amount * price
         currencies = symbol.split('-')
         if len(currencies) != 2:
-            self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
+            self.Logger.error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
             return None, None
 
         buyPosition = sellPosition = None
 
         if side == "Buy":
-            buyPositionValue = self.getPositionValue(userId, currencies[0]) + amount
+            buyPositionValue = float(self.getPositionValue(userId, currencies[0])) + amount
             buyPosition = self.UserMgr.updatePosition(userId, currencies[0], buyPositionValue)
-            sellPositionValue = self.getPositionValue(userId,currencies[1]) - value
+            sellPositionValue = float(self.getPositionValue(userId,currencies[1])) - value
             sellPosition = self.UserMgr.updatePosition(userId, currencies[1], sellPositionValue)
         else:
-            buyPositionValue = self.getPositionValue(userId, currencies[1]) + amount
+            buyPositionValue = float(self.getPositionValue(userId, currencies[1])) + amount
             buyPosition = self.UserMgr.updatePosition(userId, currencies[1], buyPositionValue)
-            sellPositionValue = self.getPositionValue(userId,currencies[0]) - value
+            sellPositionValue = float(self.getPositionValue(userId,currencies[0])) - value
             sellPosition = self.UserMgr.updatePosition(userId, currencies[0], sellPositionValue)
 
         return buyPosition, sellPosition
@@ -91,5 +91,5 @@ class BankManager(object):
         if secType == "CRYPTO":
             return self.updateCryptoPosition(userId, symbol, amount, price, side)
         else:
-            self.Logger.Error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
+            self.Logger.error("Symbol si not crypto symbol.  Format CCY1-CCY2.  Symbol " + symbol)
             return None, None
