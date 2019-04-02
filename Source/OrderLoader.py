@@ -25,7 +25,7 @@ class OrderLoader(object):
         if len(results) == 0:
             return
         for result in results:
-            print("Do Something")
+            orderManager.createOrderFromDbRecord(result)
 
     def loadFills(self, orderManager, system):
 
@@ -34,4 +34,4 @@ class OrderLoader(object):
         if len(results) == 0:
             return
         for result in results:
-            print("Do Something")
+            orderManager.createFillFromDbRecord(result)
