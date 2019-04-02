@@ -8,7 +8,7 @@ from Source.SMGConfigMgr import SMGConfigMgr
 from Source.DBOrderManagerWriter import DBOrderManagerWriter
 from Source.OrderSequenceQuery import OrderSequenceQuery
 from Source.PricingManager import PricingManager
-
+from Source.OrderLoader import OrderLoader
 
 class SMGBankManager(object):
 
@@ -42,7 +42,7 @@ class SMGBankManager(object):
                 return
 
             temp = message.split(',')
-            userId = temp[8]
+            userId = int(temp[8])
 
             fill = self.OrderMgr.createFillFromMsg(message, userId)
             if fill is None:
@@ -149,6 +149,9 @@ def main():
             bankMgr.OrderMgr.setOrderSeq(seq.getOrderSeq(systemName))
             bankMgr.OrderMgr.setFillSeq(seq.getFillSeq(systemName))
             bankMgr.ExtOrderId = seq.getExtOrderSeq(systemName)
+        with OrderLoader(host, user, password, database) as orderLoad:
+            orderLoad.loadOrders(bankMgr.OrderMgr, systemName)
+            orderLoad.loadFills(bankMgr.OrderMgr, systemName)
         bankMgr.run()
 
 

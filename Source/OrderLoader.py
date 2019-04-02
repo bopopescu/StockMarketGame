@@ -15,6 +15,8 @@ class OrderLoader(object):
         self.Db.connect()
         self.Db.changeDb(self.Database)
 
+        return self
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("Done")
 
