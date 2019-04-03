@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/BankManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/BankManager.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="131">
-              <caret line="122" selection-start-line="122" selection-end-line="122" />
+              <caret line="111" selection-start-line="111" selection-end-line="111" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -54,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/BankManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="90" />
+            <state relative-caret-position="191">
+              <caret line="72" selection-start-line="72" selection-end-line="72" />
             </state>
           </provider>
         </entry>
@@ -94,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="324">
-              <caret line="202" column="8" lean-forward="true" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="8" />
+              <caret line="202" column="8" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="8" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -204,8 +205,8 @@
         <option value="$PROJECT_DIR$/Source/SMGExchange.py" />
         <option value="$PROJECT_DIR$/Source/SMGBankManager.py" />
         <option value="$PROJECT_DIR$/Source/SMGUserManager.py" />
-        <option value="$PROJECT_DIR$/Source/BankManager.py" />
         <option value="$PROJECT_DIR$/Source/UserManager.py" />
+        <option value="$PROJECT_DIR$/Source/BankManager.py" />
       </list>
     </option>
   </component>
@@ -272,6 +273,27 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.SMGTestConsole">
+    <configuration name="BankManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StockMarketGame" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/BankManager.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="GDAXFeedHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -356,33 +378,12 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SMGUserManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="StockMarketGame" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/SMGUserManager.py" />
-      <option name="PARAMETERS" value="SMGUserManager.cfg" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.SMGUserManager" />
       <item itemvalue="Python.SMGTestConsole" />
       <item itemvalue="Python.GDAXFeedHandler" />
       <item itemvalue="Python.SMGBankManager" />
       <item itemvalue="Python.SMGExchange" />
+      <item itemvalue="Python.BankManager" />
     </list>
     <recent_temporary>
       <list>
@@ -390,7 +391,7 @@
         <item itemvalue="Python.SMGBankManager" />
         <item itemvalue="Python.SMGExchange" />
         <item itemvalue="Python.GDAXFeedHandler" />
-        <item itemvalue="Python.SMGUserManager" />
+        <item itemvalue="Python.BankManager" />
       </list>
     </recent_temporary>
   </component>
@@ -460,11 +461,6 @@
           <url>file://$PROJECT_DIR$/Source/SMGExchange.py</url>
           <line>195</line>
           <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Source/SMGBankManager.py</url>
-          <line>111</line>
-          <option name="timeStamp" value="53" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -746,7 +742,7 @@
     <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
-          <caret line="202" column="8" lean-forward="true" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="8" />
+          <caret line="202" column="8" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="8" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -780,16 +776,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="122" selection-start-line="122" selection-end-line="122" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/UserManager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
@@ -800,10 +786,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Source/BankManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="90" />
+        <state relative-caret-position="191">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
         </state>
       </provider>
     </entry>

@@ -79,10 +79,10 @@ class BankManager(object):
             sellPositionValue = float(self.getPositionValue(userId,currencies[1])) - value
             sellPosition = self.UserMgr.updatePosition(userId, currencies[1], sellPositionValue)
         else:
-            buyPositionValue = float(self.getPositionValue(userId, currencies[1])) + amount
-            buyPosition = self.UserMgr.updatePosition(userId, currencies[1], buyPositionValue)
-            sellPositionValue = float(self.getPositionValue(userId,currencies[0])) - value
+            sellPositionValue = float(self.getPositionValue(userId,currencies[0])) - amount
             sellPosition = self.UserMgr.updatePosition(userId, currencies[0], sellPositionValue)
+            buyPositionValue = float(self.getPositionValue(userId, currencies[1])) + value
+            buyPosition = self.UserMgr.updatePosition(userId, currencies[1], buyPositionValue)
 
         return buyPosition, sellPosition
 
