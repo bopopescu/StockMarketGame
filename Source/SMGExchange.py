@@ -151,6 +151,8 @@ class SMGExchange(object):
                 return
 
             extOrderId = temp[0]
+            userId = int(temp[16])
+
             etemp = extOrderId.split('-')
             if len(etemp) !=2:
                 self.Logger.info("Error processing order parsing extOrderId - " + extOrderId)
@@ -163,16 +165,15 @@ class SMGExchange(object):
             order = self.OM.createOrderFromMsg(message, self.UserId)
             self.DB.saveNewOrder(order)
             price = self.getPrice(order.Symbol, order.Side)
-            fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now()
-                                      , self.UserId)
+            fill = self.OM.createFill("", order.OrderId,order.Qty, price, order.ExtOrderId, datetime.datetime.now(),userId)
             self.DB.saveNewFill(fill)
             self.DB.updateOrder(order)
 
             topic = order.ExtSystem + "Fill"
             self.Logger.info("Sending fill - Topic " + topic + " - " + str(fill))
             self.Producer.send(topic, str(fill).encode('utf-8'))
-        except Exception:
-            self.Logger.error("Error processing Order message " + message)
+        except Exception as e:
+            self.Logger.error("Error processing Order message " + message + " Error:" + str(e))
 
     def run(self):
 

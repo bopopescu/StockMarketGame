@@ -24,6 +24,7 @@ class SMGConfigMgr(object):
 
     def getConfigItem(self, section, option):
 
+
         if section not in self.Data:
             print("Can't find section " + section)
             return None

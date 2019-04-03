@@ -31,6 +31,37 @@ class SMGOrderManager(object):
         self.FillCounter += 1
         return self.OrderIdText + "-" + str(self.FillCounter)
 
+    def isValidFill(self, message):
+
+        temp = message.split(',')
+        if len(temp) != 9:
+            return False
+
+        temp2 = temp[6].split('-')
+        if len(temp2) != 2:
+            return False
+
+        if int(temp2[1]) <= self.FillCounter:
+            return False
+
+        return True
+
+    def createFillFromDbRecord(self, result):
+
+        fill = self.createFill(result[2],result[1], float(result[3]), float(result[4]), result[6], result[5], int(result[7]))
+
+        return fill
+
+    def createOrderFromDbRecord(self, result):
+
+        orderId = result[2]
+
+        order = SMGOrder(result[0],orderId, result[1], result[3],result[4],float(result[5]),int(result[12]), float(result[9]), result[13], result[15], result[16], int(result[17]), result[18])
+
+        self.Orders[orderId] = order
+
+        return order
+
     def createOrder(self, parentId, orderId, symbol, side, qty, ordType, limitPrice, tif, extOrderId, extSystem, userId, secType):
 
         if orderId == "":

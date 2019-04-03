@@ -24,7 +24,7 @@ class SMGUserManager(object):
         self.UserManager.connect(database)
         self.Logger.info("Subscribe to SMGNewUser")
         self.Consumer.subscribe(['SMGNewUser'])
-        self.UserManager.loadExistingUsers()
+        self.UserManager.loadInitialData()
 
         recovering = True
 
@@ -51,8 +51,13 @@ class SMGUserManager(object):
                     else:
                         self.UserManager.updateUserHistory(actuser, "NEW")
                         self.UserManager.createPortfolio(actuser, 15000000.00)
-                        self.UserManager.createInitialPosition(actuser, "USD", 15000000.00)
-                        self.Producer.send("UserAddSucceeded", str(actuser).encode('utf-8'))
+                        self.UserManager.createInitialPosition(actuser.UserId, "USD", 15000000.00)
+                        self.Producer.send("NewUser", str(actuser).encode('utf-8'))
+                        portfolio = self.UserManager.getPortfolio(actuser.UserId)
+                        self.Producer.send("NewPortfolio", str(portfolio).encode('utf-8'))
+                        position = self.UserManager.getPosition(actuser.UserId, "USD")
+                        self.Producer.send("NewPosition", str(position).encode('utf-8'))
+
             recovering = False
 
 
