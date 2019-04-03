@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Source/BankManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/BankManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGBankManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGBankManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGExchange.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGExchange.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SMGUserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGUserManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UserManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/BankManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="76" selection-start-line="76" selection-end-line="76" />
+            <state relative-caret-position="154">
+              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="90" />
             </state>
           </provider>
         </entry>
@@ -275,7 +271,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SMGBankManager">
+  <component name="RunManager" selected="Python.SMGTestConsole">
     <configuration name="GDAXFeedHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -390,10 +386,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SMGBankManager" />
-        <item itemvalue="Python.GDAXFeedHandler" />
         <item itemvalue="Python.SMGTestConsole" />
+        <item itemvalue="Python.SMGBankManager" />
         <item itemvalue="Python.SMGExchange" />
+        <item itemvalue="Python.GDAXFeedHandler" />
         <item itemvalue="Python.SMGUserManager" />
       </list>
     </recent_temporary>
@@ -419,8 +415,8 @@
       <window_info id="Favorites" order="2" sideWeight="0.5022727" side_tool="true" weight="0.24981412" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.24180327" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49962825" weight="0.44535518" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49888477" visible="true" weight="0.397541" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49962825" visible="true" weight="0.44535518" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49888477" weight="0.397541" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -469,11 +465,6 @@
           <url>file://$PROJECT_DIR$/Source/SMGBankManager.py</url>
           <line>111</line>
           <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Source/BankManager.py</url>
-          <line>76</line>
-          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -811,8 +802,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/BankManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        <state relative-caret-position="154">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="90" />
         </state>
       </provider>
     </entry>
