@@ -22,7 +22,12 @@ class GDAXFeedHandler(object):
 
         try:
             tickerPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
-            tickerFilename = tickerPath + "\\" + self.TickerFileName
+            tickerFilename = tickerPath
+
+            if os.name == "nt":
+                tickerFilename += "\\" + self.TickerFileName
+            else:
+                tickerFilename += "/" + self.TickerFileName
 
             fp = open(tickerFilename,"r")
             for ticker in fp:

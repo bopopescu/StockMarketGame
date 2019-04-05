@@ -7,7 +7,12 @@ class SMGLogger(object):
     def __init__(self, logFilename, logLevel):
 
         loggingPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'logging'))
-        loggingFilename = loggingPath + "\\" + logFilename
+        loggingFilename = loggingPath
+
+        if os.name == "nt":
+            loggingFilename += "\\" + logFilename
+        else:
+            loggingFilename += "/" + logFilename
 
         loggingLevel = logging.DEBUG
         if logLevel == "INFO":
