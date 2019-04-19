@@ -37,65 +37,6 @@ class SMGOrderSimulator(object):
 
         return False
 
-    def setFillSeq(self):
-
-        try:
-            sqlString = "select max(created) from smgfill where refId like 'SIM%'"
-            results =self.DbOmWriter.Db.select(sqlString)
-            if len(results) == 0:
-                return
-            created = ""
-            for result in results:
-                created = result[0]
-            sqlString = "select refId from smgFill where created='%s'" % (created)
-            results = self.DbOmWriter.Db.select(sqlString)
-
-            if len(results) == 0:
-                self.Logger.info("Did not get back a refId for SIM.  Strange!!!")
-                return
-            fillId = ""
-            for result in results:
-                if "SIM" in result[0]:
-                    fillId = result[0]
-
-            temp = fillId.split('-')
-            if len(temp) != 2:
-                self.Logger.info("Error trying to split fillId.  FillId is " + fillId)
-                return
-
-            self.OM.setFillSeq(int(temp[1]))
-        except Exception:
-            self.Logger.error("Error getting fillId.  Will go with default value")
-
-    def setOrderSeq(self):
-
-        try:
-            sqlString = "select max(lastupdate) from smgorder where ordersystem = 'Simulator'"
-            results = self.DbOmWriter.Db.select(sqlString)
-            if len(results) == 0:
-                return
-            lastupdate = ""
-            for result in results:
-                lastupdate = result[0]
-            sqlString = "select orderId from smgorder where ordersystem = 'Simulator' and lastupdate = '%s'" % (lastupdate)
-
-            results = self.DbOmWriter.Db.select(sqlString)
-            if len(results) == 0:
-                self.Logger.info("Did not get back a orderId for Simulator.  Strange!!!")
-                return
-            orderId = ""
-            for result in results:
-                orderId = result[0]
-
-            temp = orderId.split('-')
-            if len(temp) != 2:
-                self.Logger.info("Error trying to split OrderId.  orderId is " + orderId)
-                return
-
-            self.OM.setOrderSeq(int(temp[1]))
-        except Exception:
-            self.Logger.error("Error getting orderId.  Will go with default value")
-
     def setSide(self):
 
         if self.Side == "Buy":
@@ -174,8 +115,6 @@ class SMGOrderSimulator(object):
             self.Logger.error("Not able to find userId for SMGOrderSimulator")
             return
 
-        #self.setFillSeq()
-        #self.setOrderSeq()
         self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
         self.Timer.start()
