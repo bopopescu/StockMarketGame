@@ -7,6 +7,7 @@ from Source.DBOrderManagerWriter import DBOrderManagerWriter
 import sys
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
+from Source.OrderSequenceQuery import OrderSequenceQuery
 import random
 
 
@@ -173,8 +174,8 @@ class SMGOrderSimulator(object):
             self.Logger.error("Not able to find userId for SMGOrderSimulator")
             return
 
-        self.setFillSeq()
-        self.setOrderSeq()
+        #self.setFillSeq()
+        #self.setOrderSeq()
         self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
         self.Timer.start()
@@ -212,6 +213,10 @@ def main():
         exit(1)
 
     simulator = SMGOrderSimulator(host, user, password, database, suffix, orderSeq, fillSeq, systemName, defaultSide, logFile, logLevel)
+    with OrderSequenceQuery(host, user, password, database) as seq:
+        simulator.OM.setOrderSeq(seq.getOrderSeq(systemName))
+        simulator.OM.setFillSeq(seq.getFillSeq(systemName))
+
     simulator.run()
 
 
