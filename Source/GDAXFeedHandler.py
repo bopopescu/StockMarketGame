@@ -6,7 +6,7 @@ from kafka import KafkaProducer
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
 import os
-
+from confluent_kafka.admin import NewTopic, AdminClient
 
 class GDAXFeedHandler(object):
 
@@ -17,6 +17,7 @@ class GDAXFeedHandler(object):
         self.Tickers = []
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Logger = SMGLogger(logFile, logLevel)
+        self.KafkaAdmin = AdminClient({'bootstrap.servers': 'localhost:9092'})
 
     def getTickers(self):
 
@@ -109,6 +110,10 @@ class GDAXFeedHandler(object):
 
     def run(self):
 
+        self.Logger.info("making sure topic is created")
+        topics = ['Erik', 'GDAXFeed', 'Carol']
+        new_topics = [NewTopic(topic, num_partitions=3, replication_factor=1) for topic in topics]
+        self.KafkaAdmin.create_topics(new_topics)
         ws = self.connectAndSubscribe()
 
         self.Logger.info("Receiving Data...")
