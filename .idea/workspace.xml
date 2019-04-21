@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4f9fa1-b339-49f7-893a-83002698e3dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Source/SMGUserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGUserManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SMGBankManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SMGBankManager.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +22,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/GDAXFeedHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
+            <state relative-caret-position="308">
               <caret line="20" selection-start-line="19" selection-end-line="20" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -46,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="325">
-              <caret line="29" lean-forward="true" selection-start-line="28" selection-end-line="29" />
+              <caret line="29" selection-start-line="28" selection-end-line="29" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -57,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="39" column="65" lean-forward="true" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+            <state relative-caret-position="119">
+              <caret line="7" selection-start-line="6" selection-end-line="7" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -78,8 +79,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="132" selection-start-line="132" selection-end-line="132" />
+            <state relative-caret-position="238">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -88,10 +89,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Configuration/SMGTestConsole.cfg">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/SMGTestConsole.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="90" column="26" lean-forward="true" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+            <state relative-caret-position="234">
+              <caret line="100" column="17" selection-start-line="100" selection-start-column="17" selection-end-line="100" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -103,18 +113,6 @@
               <caret line="216" column="23" selection-start-line="216" selection-start-column="23" selection-end-line="216" selection-end-column="23" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/UserManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3587">
-              <caret line="215" selection-start-line="215" selection-end-line="215" />
-              <folding>
-                <element signature="e#0#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -201,7 +199,6 @@
         <option value="$PROJECT_DIR$/Source/SMGTestConsole.py" />
         <option value="$PROJECT_DIR$/Source/SMGOrderManager.py" />
         <option value="$PROJECT_DIR$/Source/OrderLoader.py" />
-        <option value="$PROJECT_DIR$/Source/SMGBankManager.py" />
         <option value="$PROJECT_DIR$/Source/UserManager.py" />
         <option value="$PROJECT_DIR$/Source/BankManager.py" />
         <option value="$PROJECT_DIR$/Source/SMGLogger.py" />
@@ -213,6 +210,8 @@
         <option value="$PROJECT_DIR$/Source/SMGOrderSimulator.py" />
         <option value="$PROJECT_DIR$/Source/SMGExchange.py" />
         <option value="$PROJECT_DIR$/Source/SMGUserManager.py" />
+        <option value="$PROJECT_DIR$/Source/SMGBankManager.py" />
+        <option value="$PROJECT_DIR$/Configuration/SMGTestConsole.cfg" />
       </list>
     </option>
   </component>
@@ -281,20 +280,41 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.SMGTestConsole">
-    <configuration name="DbWriter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="GDAXFeedHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="StockMarketGame" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\estigum\AppData\Local\Programs\Python\Python37\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/DbWriter.py" />
-      <option name="PARAMETERS" value="DbWriter.cfg" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/GDAXFeedHandler.py" />
+      <option name="PARAMETERS" value="GDAXFeedHandler.cfg" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SMGBankManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="StockMarketGame" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\estigum\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/SMGBankManager.py" />
+      <option name="PARAMETERS" value="SMGBankManager.cfg" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -317,27 +337,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/SMGExchange.py" />
       <option name="PARAMETERS" value="SMGExchange.cfg" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SMGOrderSimulator" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="StockMarketGame" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/SMGOrderSimulator.py" />
-      <option name="PARAMETERS" value="SMGOrderSimulator.cfg" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -389,18 +388,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.SMGExchange" />
-      <item itemvalue="Python.DbWriter" />
-      <item itemvalue="Python.SMGOrderSimulator" />
       <item itemvalue="Python.SMGUserManager" />
       <item itemvalue="Python.SMGTestConsole" />
+      <item itemvalue="Python.GDAXFeedHandler" />
+      <item itemvalue="Python.SMGBankManager" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.SMGTestConsole" />
-        <item itemvalue="Python.SMGUserManager" />
-        <item itemvalue="Python.SMGOrderSimulator" />
         <item itemvalue="Python.SMGExchange" />
-        <item itemvalue="Python.DbWriter" />
+        <item itemvalue="Python.SMGBankManager" />
+        <item itemvalue="Python.GDAXFeedHandler" />
+        <item itemvalue="Python.SMGUserManager" />
       </list>
     </recent_temporary>
   </component>
@@ -438,12 +437,12 @@
       <window_info id="Favorites" order="2" sideWeight="0.5022727" side_tool="true" weight="0.24981412" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.24180327" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49962825" visible="true" weight="0.44398907" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49962825" weight="0.44398907" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49888477" weight="0.397541" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329235" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.329235" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329235" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50111526" side_tool="true" weight="0.9590164" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.329235" />
@@ -504,11 +503,6 @@
           <url>file://$PROJECT_DIR$/Source/GDAXFeedHandler.py</url>
           <line>14</line>
           <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Source/SMGUserManager.py</url>
-          <line>2</line>
-          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -762,16 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/KafkaAdminMgr.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -789,16 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/GDAXFeedHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="20" selection-start-line="19" selection-end-line="20" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGExchange.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -812,17 +786,7 @@
     <entry file="file://$PROJECT_DIR$/Source/SMGOrderSimulator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
-          <caret line="29" lean-forward="true" selection-start-line="28" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="39" column="65" lean-forward="true" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+          <caret line="29" selection-start-line="28" selection-end-line="29" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -831,8 +795,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/SMGTestConsole.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="90" column="26" lean-forward="true" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+        <state relative-caret-position="234">
+          <caret line="100" column="17" selection-start-line="100" selection-start-column="17" selection-end-line="100" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGUserManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="6" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/GDAXFeedHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="20" selection-start-line="19" selection-end-line="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/SMGBankManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration/SMGTestConsole.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>

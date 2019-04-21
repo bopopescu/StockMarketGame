@@ -9,6 +9,7 @@ from Source.DBOrderManagerWriter import DBOrderManagerWriter
 from Source.OrderSequenceQuery import OrderSequenceQuery
 from Source.PricingManager import PricingManager
 from Source.OrderLoader import OrderLoader
+from Source.KafkaAdminMgr import KafkaAdminMgr
 
 class SMGBankManager(object):
 
@@ -21,6 +22,7 @@ class SMGBankManager(object):
         self.Database = database
         self.PricingMgr = PricingManager()
         self.ExtOrderId = 0
+        self.KafkaAdmin = KafkaAdminMgr()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("Going to exit")
@@ -32,6 +34,7 @@ class SMGBankManager(object):
         self.Consumer = KafkaConsumer(bootstrap_servers='localhost:9092', auto_offset_reset='earliest',
                                       consumer_timeout_ms=1000)
         self.BankManager.UserMgr.loadInitialData()
+        self.KafkaAdmin.addTopics(['GDAXFeed', 'SMGNewOrder', 'BankManagerFill', 'SMGPosition'])
         self.Consumer.subscribe(['GDAXFeed', 'SMGNewOrder', 'BankManagerFill'])
         return self
 
