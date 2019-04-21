@@ -9,6 +9,7 @@ from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
 from Source.OrderSequenceQuery import OrderSequenceQuery
 import random
+from Source.KafkaAdminMgr import KafkaAdminMgr
 
 
 class SMGOrderSimulator(object):
@@ -25,6 +26,7 @@ class SMGOrderSimulator(object):
         self.SimTickers = ['BTC-USD', 'ETH-USD', 'LTC-USD', 'BCH-USD', 'ZRX-USD']
         self.SimTickerCount = 0
         self.UserId = -1
+        self.KafkaAdmin = KafkaAdminMgr()
 
     def setUserId(self):
 
@@ -115,6 +117,7 @@ class SMGOrderSimulator(object):
             self.Logger.error("Not able to find userId for SMGOrderSimulator")
             return
 
+        self.KafkaAdmin.addTopics(['SimulatorFill','SMGExchangeOrder'])
         self.Logger.info("Subscribe to SimulatorFill")
         self.Consumer.subscribe(['SimulatorFill'])
         self.Timer.start()
