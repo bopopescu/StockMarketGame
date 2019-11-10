@@ -142,17 +142,13 @@ def main():
 
     config = SMGConfigMgr()
     config.load(sys.argv[1])
+    config.setConfigItems()
 
-    connection = config.getConfigItem("FeedHandler", "connection")
-    tickerFile = config.getConfigItem("FeedHandler", "tickerfile")
-    logFile = config.getConfigItem("Logging", "filename")
-    logLevel = config.getConfigItem("Logging", "loglevel")
-
-    if connection is None or tickerFile is None or logFile is None or logLevel is None:
+    if config.Connection is None or config.TickerFile is None or config.LogFile is None or config.LogLevel is None:
         print("Invalid configuration.  Please check")
         exit(1)
 
-    test = GDAXFeedHandler(connection, tickerFile, logFile, logLevel)
+    test = GDAXFeedHandler(config.Connection, config.TickerFile, config.LogFile, config.LogLevel)
     test.Logger.info("Getting Ready to run")
     test.run()
 

@@ -81,20 +81,14 @@ def main():
 
     config = SMGConfigMgr()
     config.load(sys.argv[1])
+    config.setConfigItems()
 
-    host = config.getConfigItem("DatabaseInfo", "host")
-    user = config.getConfigItem("DatabaseInfo", "user")
-    password = config.getConfigItem("DatabaseInfo", "passwd")
-    database = config.getConfigItem("DatabaseInfo", "db")
-    logFile = config.getConfigItem("Logging", "filename")
-    logLevel = config.getConfigItem("Logging", "loglevel")
-
-    if host is None or user is None or password is None or database is None or logFile is None or logLevel is None:
+    if config.Host is None or config.User is None or config.Password is None or config.Database is None or config.LogFile is None or config.LogLevel is None:
         print("Invalid configuration items.  Please check config file.")
         exit(1)
 
-    writer = DBWriter(host, user, password, logFile, logLevel)
-    writer.run(database)
+    writer = DBWriter(config.Host, config.User, config.Password, config.LogFile, config.LogLevel)
+    writer.run(config.Database)
 
 
 if __name__ == '__main__':
