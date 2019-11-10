@@ -6,6 +6,7 @@ from Source.SMGConfigMgr import SMGConfigMgr
 import sys
 import datetime
 from Source.SMGLogger import SMGLogger
+from Source.KafkaAdminMgr import KafkaAdminMgr
 
 
 class SMGExchange(object):
@@ -23,6 +24,8 @@ class SMGExchange(object):
         self.Logger = SMGLogger(logName, logLevel)
         self.RecOrderIds = {}
         self.UserId = -1
+        self.KafkaAdmin = KafkaAdminMgr()
+
 
     def setUserId(self):
 
@@ -184,6 +187,7 @@ class SMGExchange(object):
         self.setFillSeq()
         self.setOrderSeq()
         self.getProcessOrderIdsBySystem()
+        self.KafkaAdmin.addTopics(['GDAXFeed', 'SMGExchangeOrder'])
         self.Logger.info("Subscribing to GDAXFeed and SMGExchangeOrder")
         self.Consumer.subscribe(['GDAXFeed', 'SMGExchangeOrder'])
 

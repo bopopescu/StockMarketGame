@@ -5,8 +5,8 @@ import sys
 from kafka import KafkaProducer
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
+from Source.KafkaAdminMgr import KafkaAdminMgr
 import os
-
 
 class GDAXFeedHandler(object):
 
@@ -17,12 +17,18 @@ class GDAXFeedHandler(object):
         self.Tickers = []
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
         self.Logger = SMGLogger(logFile, logLevel)
+        self.KafkaAdmin = KafkaAdminMgr()
 
     def getTickers(self):
 
         try:
             tickerPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
-            tickerFilename = tickerPath + "\\" + self.TickerFileName
+            tickerFilename = tickerPath
+
+            if os.name == "nt":
+                tickerFilename += "\\" + self.TickerFileName
+            else:
+                tickerFilename += "/" + self.TickerFileName
 
             fp = open(tickerFilename,"r")
             for ticker in fp:
@@ -104,6 +110,9 @@ class GDAXFeedHandler(object):
 
     def run(self):
 
+        self.Logger.info("making sure topic is created")
+        topics = ['GDAXFeed']
+        self.KafkaAdmin.addTopics(topics)
         ws = self.connectAndSubscribe()
 
         self.Logger.info("Receiving Data...")

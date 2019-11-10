@@ -4,6 +4,7 @@ import sys
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
 from Source.UserManager import UserManager
+from Source.KafkaAdminMgr import KafkaAdminMgr
 
 
 class SMGUserManager(object):
@@ -14,6 +15,7 @@ class SMGUserManager(object):
         self.UserManager = UserManager(host, user, password, self.Logger)
         self.Producer = None
         self.Consumer = None
+        self.KafkaAdmin = KafkaAdminMgr()
 
     def connect(self):
         self.Producer = KafkaProducer(bootstrap_servers='localhost:9092')
@@ -22,6 +24,7 @@ class SMGUserManager(object):
     def run(self, database):
         self.connect()
         self.UserManager.connect(database)
+        self.KafkaAdmin.addTopics(['NewUser', 'NewPortfolio', 'NewPosition', 'UserAddFailed','SMGNewUser'])
         self.Logger.info("Subscribe to SMGNewUser")
         self.Consumer.subscribe(['SMGNewUser'])
         self.UserManager.loadInitialData()

@@ -3,6 +3,7 @@ import sys
 from Source.StockMarketDB import StockMarketDB
 from Source.SMGConfigMgr import SMGConfigMgr
 from Source.SMGLogger import SMGLogger
+from Source.KafkaAdminMgr import KafkaAdminMgr
 
 
 class DBWriter(object):
@@ -12,6 +13,8 @@ class DBWriter(object):
         self.Db = StockMarketDB(user, password, host)
         self.StartSeq = {}
         self.Logger = SMGLogger(logFile, logLevel)
+        self.KafkaAdmin = KafkaAdminMgr()
+
 
     def getKafkaConsumer(self):
 
@@ -59,6 +62,7 @@ class DBWriter(object):
         consumer = self.getKafkaConsumer()
 
         self.Logger.info("Subscribe to GDAXFeed")
+        self.KafkaAdmin.addTopics(['GDAXFeed'])
         consumer.subscribe(['GDAXFeed'])
 
         self.getStartSequences()

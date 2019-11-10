@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: confluent-kafka
+Version: 1.0.0
+Summary: Confluent's Python client for Apache Kafka
+Home-page: https://github.com/confluentinc/confluent-kafka-python
+Author: Confluent Inc
+Author-email: support@confluent.io
+License: UNKNOWN
+Platform: UNKNOWN
+Provides-Extra: avro
+Requires-Dist: fastavro ; extra == 'avro'
+Requires-Dist: requests ; extra == 'avro'
+Requires-Dist: avro-python3 ; extra == 'avro'
+Provides-Extra: dev
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: flake8 ; extra == 'dev'
+
+UNKNOWN
+
+
